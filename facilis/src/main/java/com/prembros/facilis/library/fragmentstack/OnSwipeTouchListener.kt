@@ -1,4 +1,4 @@
-package com.prembros.facilis.library
+package com.prembros.facilis.library.fragmentstack
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -119,7 +119,7 @@ open class OnSwipeTouchListener constructor(
             var degree: Double
             var direction: SwipeDirection? = null
             when (quadrant) {
-                OnSwipeTouchListener.Quadrant.TOP_LEFT -> {
+                Quadrant.TOP_LEFT -> {
                     degree = Math.toDegrees(radian)
                     degree = 180 - degree
                     radian = Math.toRadians(degree)
@@ -129,7 +129,7 @@ open class OnSwipeTouchListener constructor(
                         SwipeDirection.Up
                     }
                 }
-                OnSwipeTouchListener.Quadrant.TOP_RIGHT -> {
+                Quadrant.TOP_RIGHT -> {
                     degree = Math.toDegrees(radian)
                     radian = Math.toRadians(degree)
                     direction = if (Math.cos(radian) < 0.5) {
@@ -138,7 +138,7 @@ open class OnSwipeTouchListener constructor(
                         SwipeDirection.Right
                     }
                 }
-                OnSwipeTouchListener.Quadrant.BOTTOM_LEFT -> {
+                Quadrant.BOTTOM_LEFT -> {
                     degree = Math.toDegrees(radian)
                     degree += 180
                     radian = Math.toRadians(degree)
@@ -148,7 +148,7 @@ open class OnSwipeTouchListener constructor(
                         SwipeDirection.Down
                     }
                 }
-                OnSwipeTouchListener.Quadrant.BOTTOM_RIGHT -> {
+                Quadrant.BOTTOM_RIGHT -> {
                     degree = Math.toDegrees(radian)
                     degree = 360 - degree
                     radian = Math.toRadians(degree)

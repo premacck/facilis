@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.prembros.facilis.app.MyActivity">
+
+    <com.prembros.facilis.library.cardstack.cardstack.CardStack
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:card_margin="18dp"
+        app:card_enable_loop="true"
+        app:card_gravity="top"
+        app:card_stack_size="3" />
+
+</RelativeLayout>

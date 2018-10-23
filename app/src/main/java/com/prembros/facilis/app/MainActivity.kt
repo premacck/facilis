@@ -3,7 +3,7 @@ package com.prembros.facilis.app
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
-import com.prembros.facilis.library.card.BaseCard
+import com.prembros.facilis.library.fragmentstack.card.BaseCard
 import com.prembros.facilis.library.util.movePreviousCardToBackground
 import com.prembros.facilis.library.util.movePreviousCardToForeground
 import com.prembros.facilis.library.util.pushCard

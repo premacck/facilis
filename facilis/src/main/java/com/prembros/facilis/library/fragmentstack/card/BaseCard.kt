@@ -1,4 +1,4 @@
-package com.prembros.facilis.library.card
+package com.prembros.facilis.library.fragmentstack.card
 
 import android.app.Activity
 import android.support.v4.app.Fragment

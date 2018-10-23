@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CardStack">
+        <!--Card background color-->
+        <attr name="card_backgroundColor" format="color" />
+        <!--Number of cards displayed-->
+        <attr name="card_stack_size" format="integer" />
+        <!--Whether infinite loop card mode is enabled-->
+        <attr name="card_enable_loop" format="boolean" />
+        <!--Spacing between cards-->
+        <attr name="card_margin" format="dimension" />
+        <!--Whether the card is rotated when dragging-->
+        <attr name="card_enable_rotation" format="boolean" />
+        <!--Card direction: up, down-->
+        <attr name="card_gravity">
+            <enum name="top" value="1" />
+            <enum name="bottom" value="2" />
+        </attr>
+    </declare-styleable>
+
+</resources>

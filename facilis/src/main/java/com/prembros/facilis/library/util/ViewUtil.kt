@@ -16,7 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import com.prembros.facilis.R
-import com.prembros.facilis.library.OnSwipeTouchListener
+import com.prembros.facilis.library.fragmentstack.OnSwipeTouchListener
 
 fun getScreenSize(display: Display): IntArray {
     val size = Point()

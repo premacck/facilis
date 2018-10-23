@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.prembros.facilis.app.MainActivity.Companion.index
-import com.prembros.facilis.library.card.BaseCard
+import com.prembros.facilis.library.fragmentstack.card.BaseCard
 import com.prembros.facilis.library.util.getDp
 import com.prembros.facilis.library.util.moveToBackGround
 import com.prembros.facilis.library.util.moveToForeGround

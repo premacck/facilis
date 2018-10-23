@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.util.Log
 import com.prembros.facilis.R
-import com.prembros.facilis.library.card.BaseCard
+import com.prembros.facilis.library.fragmentstack.card.BaseCard
 
 fun FragmentManager.findCard(tag: String): BaseCard? {
     return this.findFragmentByTag(tag) as? BaseCard

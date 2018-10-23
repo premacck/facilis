@@ -5,4 +5,7 @@
     <string name="add_new_card">Add new Card</string>
     <string name="remove_this_card">Remove this Card</string>
     <string name="drag_handle">Drag handle</string>
+    <string name="fragment_stack">Fragment stack</string>
+    <string name="card_stack">Card stack</string>
+    <string name="demo_background">Demo background</string>
 </resources>

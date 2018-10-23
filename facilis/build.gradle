@@ -48,11 +48,10 @@ dependencies {
     implementation "com.android.support:design:${androidSupportVersion}"
     implementation "com.android.support:support-v4:${androidSupportVersion}"
     implementation "com.android.support:appcompat-v7:${androidSupportVersion}"
-//    implementation "com.android.support:cardview-v7:${androidSupportVersion}"
+    implementation "com.android.support:cardview-v7:${androidSupportVersion}"
     implementation "com.android.support:recyclerview-v7:${androidSupportVersion}"
     implementation "com.android.support:support-compat:${androidSupportVersion}"
     implementation "com.android.support:support-v13:${androidSupportVersion}"
     implementation "com.android.support:support-annotations:${androidSupportVersion}"
     implementation "org.jetbrains.anko:anko:$ankoVersion"
-    implementation "org.jetbrains.anko:anko-cardview-v7:$ankoVersion"
 }

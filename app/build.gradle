@@ -16,6 +16,7 @@ kotlin {
 
 ext {
     androidSupportVersion = '28.0.0'
+    ankoVersion = '0.10.7'
 }
 
 android {
@@ -52,5 +53,7 @@ dependencies {
     implementation "com.android.support:support-compat:${androidSupportVersion}"
     implementation "com.android.support:support-v13:${androidSupportVersion}"
     implementation "com.android.support:support-annotations:${androidSupportVersion}"
+    implementation "org.jetbrains.anko:anko:$ankoVersion"
+    implementation "org.jetbrains.anko:anko-cardview-v7:$ankoVersion"
     implementation project(':facilis')
 }

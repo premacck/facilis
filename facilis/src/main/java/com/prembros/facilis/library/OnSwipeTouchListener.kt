@@ -195,12 +195,16 @@ open class OnSwipeTouchListener constructor(
         dragView.translationY = translationY
         val alpha = translationY / screenHeight
 
+
+        /*
+        TODO: un-comment below block for scaling of backgroundLayout whole dragging
         if (backgroundLayout != null && backgroundLayout!!.scaleX <= screenWidth) {
             backgroundLayout!!.scaleX = 1 + alpha / 10
             backgroundLayout!!.scaleY = 1 + alpha / 10
         }
+        */
         if (backgroundView != null) {
-            backgroundView!!.alpha = alpha
+            backgroundView!!.alpha = 1 - alpha
         }
     }
 

@@ -16,7 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import com.prembros.facilis.R
-import com.prembros.facilis.library.fragmentstack.OnSwipeTouchListener
+import com.prembros.facilis.library.fragmentstack.SwipeDownToDismissListener
 
 fun getScreenSize(display: Display): IntArray {
     val size = Point()
@@ -87,8 +87,8 @@ fun ObjectAnimator.prepare(): ObjectAnimator {
 //    return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 //}
 
-fun View.setSwipeDownListener(activity: Activity, dragView: View, rootView: View, backgroundLayout: ViewGroup? = null) {
-    this.setOnTouchListener(object : OnSwipeTouchListener(activity, dragView, rootView, backgroundLayout) {
+fun View.setSwipeDownListener(activity: Activity, rootView: View, backgroundLayout: ViewGroup? = null) {
+    this.setOnTouchListener(object : SwipeDownToDismissListener(activity, this@setSwipeDownListener, rootView, backgroundLayout) {
         override fun onSwipeDown() {
             activity.onBackPressed()
         }

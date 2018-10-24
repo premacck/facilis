@@ -58,7 +58,7 @@ class SampleFragment : BaseCard() {
     }
 
     override fun setupSwipeDownGesture(activity: Activity) {
-        dragHandle?.setSwipeDownListener(activity, dragHandle, rootCard, rootFadedCardLayout)
+        dragHandle?.setSwipeDownListener(activity, rootCard, rootFadedCardLayout)
     }
 
     override fun dispose() {

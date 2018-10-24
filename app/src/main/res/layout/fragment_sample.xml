@@ -21,18 +21,25 @@
         android:id="@+id/rootCard"
         style="@style/CardView.Custom">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/drag_handle"
+            android:src="@drawable/drag_handle_dark" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
+            <View
                 android:id="@+id/dragHandle"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="5dp"
                 android:contentDescription="@string/drag_handle"
                 android:drawableTop="@drawable/drag_handle_dark" />
 

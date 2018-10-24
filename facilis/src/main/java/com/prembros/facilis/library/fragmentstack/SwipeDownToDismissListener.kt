@@ -16,7 +16,7 @@ import com.prembros.facilis.library.util.getDp
 import com.prembros.facilis.library.util.getScreenSize
 import java.util.*
 
-open class OnSwipeTouchListener constructor(
+abstract class SwipeDownToDismissListener constructor(
         activity: Activity,
         private val dragView: View,
         private val rootView: View,
@@ -248,13 +248,7 @@ open class OnSwipeTouchListener constructor(
         discardAnimator.start()
     }
 
-    open fun onSwipeRight() {}
-
-    open fun onSwipeLeft() {}
-
-    open fun onSwipeTop() {}
-
-    open fun onSwipeDown() {}
+    abstract fun onSwipeDown()
 
     companion object {
         private val FREEDOM_NO_TOP = Arrays.asList(SwipeDirection.Down, SwipeDirection.Left, SwipeDirection.Right)!!

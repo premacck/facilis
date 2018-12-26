@@ -86,5 +86,5 @@ fun BlurLayout.beginBlur() {
     postDelayed({
         startBlur()
         visibility = View.VISIBLE
-    }, 10)
+    }, 80)
 }

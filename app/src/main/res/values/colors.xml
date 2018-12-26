@@ -12,6 +12,7 @@
     <color name="cornflower_blue">#4f75f2</color>
     <color name="grey">#555555</color>
     <color name="grey_0_7">#b3555555</color>
+    <color name="transparent_black_80">#80000000</color>
     <color name="black_76_opaque">#4c000000</color>
     <color name="eclipse">#3D3D3D</color>
     <color name="sangria">#8E0607</color>

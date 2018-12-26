@@ -1,0 +1,63 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchParentMatchParent"
+    android:animateLayoutChanges="true">
+
+    <io.alterac.blurkit.BlurLayout
+        android:id="@+id/blurLayout"
+        style="@style/BlurLayoutFullScreen" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/rootCard"
+        style="@style/CardView.Full">
+
+        <LinearLayout
+            style="@style/MatchParentMatchParent"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/MatchParentWrapContent"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/this_is_a_card_fragment_with_a_recyclerview"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                style="@style/MatchParentWrapContent"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="10dp"
+                android:text="@string/card_with_list_implementation"
+                android:textColor="@color/grey_0_7"
+                android:textSize="14sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                style="@style/MatchParentMatchParent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_card_list" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/drag_handle_image"
+            style="@style/DragHandleDark"
+            android:contentDescription="@string/drag_handle" />
+
+        <View
+            android:id="@+id/dragArea"
+            style="@style/DragAreaWrap"
+            android:layout_height="100dp" />
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

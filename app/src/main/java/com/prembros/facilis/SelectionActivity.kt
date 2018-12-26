@@ -2,6 +2,8 @@ package com.prembros.facilis
 
 import android.os.Bundle
 import com.prembros.facilis.activity.BaseCardActivity
+import com.prembros.facilis.cardwithlist.CardWithListFragment
+import com.prembros.facilis.plaincard.PlainCardFragment
 import com.prembros.facilis.sample.R
 import com.prembros.facilis.util.*
 import kotlinx.android.synthetic.main.activity_selection.*
@@ -12,9 +14,7 @@ class SelectionActivity : BaseCardActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selection)
 
-        cardWithListBtn.onReducingClick {
-            //            TODO: launch card with RecyclerView
-        }
+        cardWithListBtn.onReducingClick { pushFragment(CardWithListFragment()) }
 
         listOfCardsBtn.onReducingClick {
             //            TODO: launch list of cards

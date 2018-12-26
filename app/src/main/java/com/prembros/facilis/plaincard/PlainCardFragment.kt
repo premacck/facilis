@@ -1,4 +1,4 @@
-package com.prembros.facilis
+package com.prembros.facilis.plaincard
 
 import android.os.Bundle
 import android.view.*

@@ -16,4 +16,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="this_is_a_sample_plain_card_fragment">This is a sample plain card fragment</string>
     <string name="you_can_swipe_down_from_anywhere_inside_to_dismiss_this_card">You can swipe down from anywhere inside to dismiss this card</string>
+    <string name="card_item_">Card Item %1$d</string>
+    <string name="this_is_a_card_fragment_with_a_recyclerview">This is a card fragment with a recyclerView</string>
+    <string name="card_with_list_implementation">It contains a basic implementation of recyclerView, you can scroll down form the top to dismiss this fragment.</string>
 </resources>

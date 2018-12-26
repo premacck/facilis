@@ -1,3 +1,5 @@
-<manifest package="com.prembros.facilis">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.prembros.facilis">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
 </manifest>

@@ -1,8 +1,3 @@
 <resources>
     <string name="app_name">Facilis</string>
-    <string name="faded_card">Faded card</string>
-    <string name="card_index">Card %1$d</string>
-    <string name="add_new_card">Add new Card</string>
-    <string name="remove_this_card">Remove this Card</string>
-    <string name="drag_handle">Drag handle</string>
 </resources>

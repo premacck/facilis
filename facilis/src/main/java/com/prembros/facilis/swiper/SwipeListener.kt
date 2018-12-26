@@ -1,22 +1,21 @@
-package com.prembros.facilis.library.fragmentstack
+package com.prembros.facilis.swiper
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ValueAnimator
+import android.animation.*
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.support.v4.view.animation.FastOutLinearInInterpolator
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.View
+import android.util.Log
+import android.view.*
 import android.view.View.OnTouchListener
-import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
-import com.prembros.facilis.library.util.getDp
-import com.prembros.facilis.library.util.getScreenSize
+import androidx.interpolator.view.animation.FastOutLinearInInterpolator
+import com.prembros.facilis.util.*
 import java.util.*
 
-abstract class SwipeDownToDismissListener constructor(
+private const val SWIPE_THRESHOLD = 150
+private const val SWIPE_VELOCITY_THRESHOLD = 200
+private const val SWIPE_THRESHOLD_PERCENT = 0.5f
+
+abstract class SwipeListener constructor(
         activity: Activity,
         private val dragView: View,
         private val rootView: View,
@@ -32,6 +31,7 @@ abstract class SwipeDownToDismissListener constructor(
     private var isDragging: Boolean = false
     private val viewOriginX: Float
     private var viewOriginY: Float = 0f
+    private var isFlingInProgress: Boolean = false
 
     private val percentX: Float
         get() {
@@ -61,8 +61,47 @@ abstract class SwipeDownToDismissListener constructor(
         gestureDetector = object : GestureDetector(
                 activity,
                 object : SimpleOnGestureListener() {
+                    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+                        return onSingleTap()
+                    }
+
                     override fun onDown(e: MotionEvent): Boolean {
                         return true
+                    }
+
+                    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+                        var result = false
+                        try {
+                            val diffY = e2.y - e1.y
+                            val diffX = e2.x - e1.x
+                            if (Math.abs(diffX) > Math.abs(diffY)) {
+                                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                                    isFlingInProgress = true
+                                    if (diffX > 0) {
+                                        onSwipeRight()
+                                    } else {
+                                        onSwipeLeft()
+                                    }
+                                    result = true
+                                } else {
+                                    isFlingInProgress = false
+                                }
+                            } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                                isFlingInProgress = true
+                                if (diffY > 0) {
+                                    onSwipeUp()
+                                } else {
+                                    discard(e2.rawY)
+                                }
+                                result = true
+                            } else {
+                                isFlingInProgress = false
+                            }
+                        } catch (exception: Exception) {
+                            Log.e("OnFling(): ", exception.message, exception)
+                            isFlingInProgress = false
+                        }
+                        return result
                     }
                 }
         ) {
@@ -78,14 +117,12 @@ abstract class SwipeDownToDismissListener constructor(
         }
         viewOriginX = rootView.translationX
         viewOriginY = rootView.translationY
-        val screenSize = getScreenSize(activity.windowManager.defaultDisplay)
-        screenWidth = screenSize[0] - getDp(activity, 16f)
+        val screenSize = activity.windowManager.defaultDisplay.getScreenSize()
+        screenWidth = screenSize[0] - activity.getDp(16f)
         screenHeight = screenSize[1]
         if (backgroundLayout != null) {
             this.backgroundLayout = backgroundLayout
             this.backgroundView = backgroundLayout.getChildAt(0)
-            this.backgroundLayout!!.pivotX = (screenSize[0] / 2).toFloat()
-            this.backgroundLayout!!.pivotY = 0f
         }
     }
 
@@ -108,6 +145,11 @@ abstract class SwipeDownToDismissListener constructor(
     }
 
     private fun handleActionUp(event: MotionEvent) {
+        if (isFlingInProgress) {
+            isFlingInProgress = false
+            return
+        }
+
         if (isDragging) {
             isDragging = false
 
@@ -193,7 +235,9 @@ abstract class SwipeDownToDismissListener constructor(
         isDragging = true
         rootView.translationY = translationY
         dragView.translationY = translationY
+
         val alpha = translationY / screenHeight
+        backgroundView?.alpha = 1 - alpha
 
 
         /*
@@ -203,9 +247,6 @@ abstract class SwipeDownToDismissListener constructor(
             backgroundLayout!!.scaleY = 1 + alpha / 10
         }
         */
-        if (backgroundView != null) {
-            backgroundView!!.alpha = 1 - alpha
-        }
     }
 
     private fun moveToOrigin(view: View) {
@@ -228,7 +269,7 @@ abstract class SwipeDownToDismissListener constructor(
         }
         if (backgroundView != null) {
             backgroundView!!.animate()
-                    .alpha(0f)
+                    .alpha(1f)
                     .setDuration(200)
                     .setInterpolator(OvershootInterpolator(1.0f))
                     .start()
@@ -248,7 +289,15 @@ abstract class SwipeDownToDismissListener constructor(
         discardAnimator.start()
     }
 
+    open fun onSwipeLeft() {}
+
+    open fun onSwipeRight() {}
+
+    open fun onSwipeUp() {}
+
     abstract fun onSwipeDown()
+
+    open fun onSingleTap(): Boolean = false
 
     companion object {
         private val FREEDOM_NO_TOP = Arrays.asList(SwipeDirection.Down, SwipeDirection.Left, SwipeDirection.Right)!!
@@ -262,8 +311,6 @@ abstract class SwipeDownToDismissListener constructor(
                 else -> FREEDOM_NO_TOP
             }
         }
-
-        private const val SWIPE_THRESHOLD_PERCENT = 0.4f
 
         private fun getRadian(x1: Float, y1: Float, x2: Float, y2: Float): Double {
             val width = x2 - x1

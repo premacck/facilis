@@ -5,7 +5,10 @@
     <string name="add_new_card">Add new Card</string>
     <string name="remove_this_card">Remove this Card</string>
     <string name="drag_handle">Drag handle</string>
-    <string name="fragment_stack">Fragment stack</string>
-    <string name="card_stack">Card stack</string>
+    <string name="card_with_list">Card With List Example</string>
+    <string name="plain_card">Plain Card example</string>
+    <string name="list_of_cards">List of cards example</string>
+    <string name="blur_popup">Blur Popup example</string>
+    <string name="blur_popup_long_press">Long press Popup example</string>
     <string name="demo_background">Demo background</string>
 </resources>

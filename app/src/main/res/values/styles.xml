@@ -7,7 +7,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
-        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="CardView.Full" parent="CardView.Light">
@@ -18,7 +17,7 @@
         <item name="cardUseCompatPadding">true</item>
     </style>
 
-    <style name="CardView.Wrap" parent="CardView.Light">
+    <style name="CardView.WrapHeight" parent="CardView.Light">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="cardElevation">8dp</item>
@@ -26,8 +25,14 @@
         <item name="cardCornerRadius">8dp</item>
     </style>
 
+    <style name="CardView.WrapWidthHeight" parent="CardView.Light">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardElevation">8dp</item>
+        <item name="cardCornerRadius">8dp</item>
+    </style>
+
     <style name="DragHandleDark">
-        <item name="android:id">@id/drag_handle_image</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:src">@drawable/drag_handle_dark</item>
@@ -38,7 +43,6 @@
     </style>
 
     <style name="DragHandleLight">
-        <item name="android:id">@id/drag_handle_image</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:src">@drawable/drag_handle_light</item>
@@ -48,5 +52,48 @@
         <item name="android:layout_gravity">top|center_horizontal</item>
     </style>
 
-    <item name="drag_handle_image" type="id" />
+    <style name="MatchParentMatchParent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="MatchParentWrapContent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="WrapContentMatchParent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="WrapContentWrapContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DragAreaFull">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:elevation">10dp</item>
+    </style>
+
+    <style name="DragAreaWrap">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:layout_gravity">top|center_horizontal</item>
+    </style>
+
+    <style name="BlurLayoutFullScreen">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:animateLayoutChanges">true</item>
+        <item name="android:visibility">invisible</item>
+        <item name="blk_blurRadius">20</item>
+        <item name="blk_downscaleFactor">0.12</item>
+        <item name="blk_fps">0</item>
+    </style>
 </resources>

@@ -1,12 +1,12 @@
 package com.prembros.facilis
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import com.prembros.facilis.activity.BaseCardActivity
 import com.prembros.facilis.sample.R
 import com.prembros.facilis.util.*
 import kotlinx.android.synthetic.main.activity_selection.*
 
-class SelectionActivity : AppCompatActivity() {
+class SelectionActivity : BaseCardActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +20,7 @@ class SelectionActivity : AppCompatActivity() {
             //            TODO: launch list of cards
         }
 
-        plainCardBtn.onElevatingClick {
-            //            TODO: launch PlainCard
-        }
+        plainCardBtn.onElevatingClick { pushFragment(PlainCardFragment()) }
 
         blurPopupBtn.onDebouncingClick {
             //            TODO: push blurPopup
@@ -32,4 +30,6 @@ class SelectionActivity : AppCompatActivity() {
             //            TODO: push long-press blur popup which gets dismissed on [ACTION_UP]
         }
     }
+
+    override fun getFragmentContainer(): Int = R.id.fragmentContainer
 }

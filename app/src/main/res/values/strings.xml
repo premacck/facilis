@@ -11,4 +11,9 @@
     <string name="blur_popup">Blur Popup example</string>
     <string name="blur_popup_long_press">Long press Popup example</string>
     <string name="demo_background">Demo background</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="this_is_a_sample_plain_card_fragment">This is a sample plain card fragment</string>
+    <string name="you_can_swipe_down_from_anywhere_inside_to_dismiss_this_card">You can swipe down from anywhere inside to dismiss this card</string>
 </resources>

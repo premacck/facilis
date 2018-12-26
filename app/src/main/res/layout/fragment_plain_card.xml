@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    style="@style/MatchParentMatchParent"
+    android:animateLayoutChanges="true">
+
+    <io.alterac.blurkit.BlurLayout
+        android:id="@+id/blurLayout"
+        style="@style/BlurLayoutFullScreen" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/rootCard"
+        style="@style/CardView.WrapWidthHeight"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/cornflower_blue">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:padding="14dp"
+            android:text="@string/this_is_a_sample_plain_card_fragment"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="100dp"
+            android:gravity="center"
+            android:padding="14dp"
+            android:text="@string/you_can_swipe_down_from_anywhere_inside_to_dismiss_this_card"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/drag_handle_image"
+            style="@style/DragHandleLight"
+            android:contentDescription="@string/drag_handle" />
+
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/dragArea"
+        style="@style/DragAreaFull"
+        android:layout_alignStart="@+id/rootCard"
+        android:layout_alignTop="@+id/rootCard"
+        android:layout_alignEnd="@+id/rootCard"
+        android:layout_alignBottom="@+id/rootCard" />
+
+</RelativeLayout>

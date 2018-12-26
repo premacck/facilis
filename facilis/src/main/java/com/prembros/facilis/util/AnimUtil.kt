@@ -53,7 +53,7 @@ fun ObjectAnimator.prepare(): ObjectAnimator {
     return this
 }
 
-fun ViewPropertyAnimator.listener(onAnimationEnd: () -> Unit): ViewPropertyAnimator {
+fun ViewPropertyAnimator.then(onAnimationEnd: () -> Unit): ViewPropertyAnimator {
     return this.setListener(object : AnimatorListenerAdapter() {
         override fun onAnimationEnd(animation: Animator?) = onAnimationEnd()
     })

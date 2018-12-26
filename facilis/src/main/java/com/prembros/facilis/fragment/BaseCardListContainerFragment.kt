@@ -56,7 +56,7 @@ abstract class BaseCardListContainerFragment : BaseFragment(), CardContainer {
     override fun parentActivity(): BaseCardActivity = (activity as? BaseCardActivity)
             ?: throw IllegalStateException("Fragment must be attached to a BaseCardActivity")
 
-    class BaseCardContainerPagerAdapter(fm: FragmentManager, baseCardContainerFragment: BaseCardListContainerFragment) : FragmentStatePagerAdapter(fm) {
+    internal class BaseCardContainerPagerAdapter(fm: FragmentManager, baseCardContainerFragment: BaseCardListContainerFragment) : FragmentStatePagerAdapter(fm) {
 
         private val ref: WeakReference<BaseCardListContainerFragment> = WeakReference(baseCardContainerFragment)
         var currentCard: BaseCardFragment? = null

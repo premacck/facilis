@@ -19,4 +19,6 @@
     <string name="card_item_">Card Item %1$d</string>
     <string name="this_is_a_card_fragment_with_a_recyclerview">This is a card fragment with a recyclerView</string>
     <string name="card_with_list_implementation">It contains a basic implementation of recyclerView, you can scroll down form the top to dismiss this fragment.</string>
+    <string name="thumbnail">Thumbnail</string>
+    <string name="liat_of_cards_implementation">It contains an implementation of horizontal ViewPager, which has cards as children.\n\nYou can swipe down from the top of any card to dismiss all.</string>
 </resources>

@@ -67,7 +67,7 @@ Add the dependency
 ```
 
 ### Usage
-- Refer to the [wiki pages](https://github.com/premacck/facilis/wiki) for more implementations
+- Refer to the [wiki pages](https://github.com/premacck/facilis/wiki) for step by step implementations
 
 ## Built With
 

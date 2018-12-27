@@ -1,6 +1,10 @@
 # Facilis
 [![](https://jitpack.io/v/premacck/facilis.svg)](https://jitpack.io/#premacck/facilis)
 
+<p align="center">
+	<img src="https://github.com/premacck/facilis/blob/master/app/src/main/ic_launcher-web.png" width="50%">
+</p>
+
 Swipe gesture based navigational library for Android.
 
 <p align="center">

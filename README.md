@@ -14,6 +14,8 @@ Swipe gesture based navigational library for Android.
 	</a>
 </p>
 
+Watch Demo Video:
+
 [![YouTube demo](https://github.com/premacck/facilis/blob/master/video_thumb.png)](https://www.youtube.com/watch?v=YlNkM7NfZec&t=1s)
 
 ## Getting Started

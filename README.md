@@ -14,6 +14,7 @@ Swipe gesture based navigational library for Android.
 	</a>
 </p>
 
+[![YouTube demo](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YlNkM7NfZec&t=1s)
 
 ## Getting Started
 

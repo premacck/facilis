@@ -3,11 +3,8 @@
 
 Swipe gesture based navigational library for Android.
 
-[Sample app on Play Store here](https://play.google.com/store/apps/details?id=com.prembros.facilis)
-
-
 <p align="center">
-	<a href="https://travis-ci.org/steverichey/google-play-badge-svg">
+	<a href="https://play.google.com/store/apps/details?id=com.prembros.facilis">
 		<img src="https://github.com/steverichey/google-play-badge-svg/blob/master/img/en_get.svg" width="50%">
 	</a>
 </p>

@@ -27,6 +27,7 @@ class SelectionActivity : BaseCardActivity() {
         blurPopupZoomBtn.onDebouncingClick { pushPopup(SampleBlurPopup.newInstance(R.anim.zoom_in, R.anim.zoom_out)) }
 
         LongPopupClickListener.inside(this)
+                .withVibration()
                 .withPopup(SampleBlurPopup.newInstance())
                 .setOn(longPressBlurPopupBtn)
     }

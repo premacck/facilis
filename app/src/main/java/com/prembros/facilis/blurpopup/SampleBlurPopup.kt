@@ -48,15 +48,33 @@ class SampleBlurPopup : BaseBlurPopup() {
         Picasso.get().load(url).into(popupThumbnail.dynamicHeightTarget(activity))
     }
 
+    /**
+     * Optional - override for customizing enter animation of the root view returned by [getRootView()]
+     */
     override fun enterAnimation(): Int = enterAnim
 
+    /**
+     * Optional - override for customizing exit animation of the root view returned by [getRootView()]
+     */
     override fun dismissAnimation(): Int = exitAnim
 
+    /**
+     * Return the background layout (preferably BlurLayout) for effects during transition, return null for transparent background and no effects
+     */
     override fun getBlurLayout(): BlurLayout? = blurLayout
 
+    /**
+     * Return the Drag area that should be used for swipe gestures, return null for no drag gesture implementations
+     */
     override fun getDragHandle(): View? = dragArea
 
+    /**
+     * Return the root view (preferably a CardView) of the fragment
+     */
     override fun getRootView(): View? = rootCard
 
+    /**
+     * Return the background layout (preferably BlurLayout) for effects during transition, return null for transparent background and no effects
+     */
     override fun getBackgroundLayout(): ViewGroup? = blurLayout
 }

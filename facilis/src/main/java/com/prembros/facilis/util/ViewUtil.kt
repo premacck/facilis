@@ -140,14 +140,18 @@ fun View.onReducingClick(launchDelay: Long = 100, action: () -> Unit) {
             }
             ACTION_CANCEL, ACTION_UP -> animatorOf(R.animator.original_size).start()
             ACTION_MOVE -> {
-                if (isNullOrEmpty(originPoint)) originPoint = arrayListOf(event.rawX, event.rawY)
+                try {
+                    if (isNullOrEmpty(originPoint)) originPoint = arrayListOf(event.rawX, event.rawY)
 
-                if (!isNullOrEmpty(originPoint)) {
-                    val deltaX = Math.abs(originPoint[0] - event.rawX)
-                    val deltaY = Math.abs(originPoint[1] - event.rawY)
-                    if (deltaX > 1 && deltaY > 1) {
-                        animatorOf(R.animator.original_size).start()
+                    if (!isNullOrEmpty(originPoint)) {
+                        val deltaX = Math.abs(originPoint[0] - event.rawX)
+                        val deltaY = Math.abs(originPoint[1] - event.rawY)
+                        if (deltaX > 1 && deltaY > 1) {
+                            animatorOf(R.animator.original_size).start()
+                        }
                     }
+                } catch (e: Exception) {
+                    animatorOf(R.animator.original_size).start()
                 }
             }
         }

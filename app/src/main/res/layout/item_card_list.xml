@@ -4,18 +4,42 @@
     style="@style/CardView.WrapHeight"
     android:layout_gravity="center">
 
-    <TextView
-        android:id="@+id/cardListItem"
-        style="@style/WrapContentWrapContent"
-        android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:background="@drawable/bg_translucent"
+    <LinearLayout
+        style="@style/MatchParentWrapContent"
         android:gravity="center"
-        android:paddingStart="20dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="5dp"
-        android:text="@string/card_item_"
-        android:textColor="@android:color/white" />
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/cardListItem"
+            style="@style/WrapContentWrapContent"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_translucent"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="5dp"
+            android:textColor="@android:color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/off_white" />
+
+        <TextView
+            style="@style/MatchParentWrapContent"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="@string/click_to_open_another_card_with_list"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

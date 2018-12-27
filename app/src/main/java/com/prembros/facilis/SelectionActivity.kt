@@ -16,7 +16,7 @@ class SelectionActivity : BaseCardActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selection)
 
-        cardWithListBtn.onReducingClick { pushFragment(CardWithListFragment()) }
+        cardWithListBtn.onReducingClick { pushFragment(CardWithListFragment.newInstance(true)) }
 
         listOfCardsBtn.onReducingClick { pushFragment(ListOfCardsContainerFragment()) }
 

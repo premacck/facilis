@@ -7,7 +7,7 @@
     <ScrollView
         style="@style/MatchParentMatchParent"
         android:clipToPadding="false"
-        android:paddingTop="160dp"
+        android:paddingTop="20dp"
         android:paddingBottom="20dp">
 
         <LinearLayout
@@ -131,7 +131,6 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/longPressBlurPopupBtn"
                 style="@style/MatchParentWrapContent"
-                android:foreground="@drawable/ripple_dark_rect_curved_corners"
                 app:cardBackgroundColor="@color/husk"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="8dp"

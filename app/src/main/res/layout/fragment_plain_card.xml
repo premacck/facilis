@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     style="@style/MatchParentMatchParent"
     android:animateLayoutChanges="true">
@@ -11,8 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/rootCard"
         style="@style/CardView.WrapWidthHeight"
-        android:layout_centerInParent="true"
-        app:cardBackgroundColor="@color/cornflower_blue">
+        android:layout_centerInParent="true">
 
         <TextView
             android:layout_width="wrap_content"

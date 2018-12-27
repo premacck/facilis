@@ -1,11 +1,15 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/MatchParentMatchParent"
-    android:animateLayoutChanges="true">
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/MatchParentMatchParent">
 
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    <io.alterac.blurkit.BlurLayout
+        android:id="@+id/blurLayout"
+        style="@style/BlurLayoutFullScreen" />
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/rootCard"
         style="@style/CardView.WrapHeight"
-        android:layout_centerInParent="true">
+        android:layout_gravity="center">
 
         <ScrollView style="@style/MatchParentMatchParent">
 
@@ -14,7 +18,7 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/thumbnail"
+                    android:id="@+id/popupThumbnail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/thumbnail"
@@ -22,28 +26,28 @@
                     android:scaleType="centerCrop" />
 
                 <TextView
-                    android:id="@+id/header"
+                    android:id="@+id/popupHeader"
                     style="@style/MatchParentWrapContent"
-                    android:layout_below="@+id/thumbnail"
+                    android:layout_below="@+id/popupThumbnail"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:padding="20dp"
-                    android:text="@string/this_is_a_card_fragment_with_a_recyclerview"
+                    android:text="@string/this_is_a_sample_blur_popup"
                     android:textColor="@color/grey"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/info"
+                    android:id="@+id/popupInfo"
                     style="@style/MatchParentWrapContent"
-                    android:layout_below="@+id/header"
+                    android:layout_below="@+id/popupHeader"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:paddingStart="20dp"
                     android:paddingTop="10dp"
                     android:paddingEnd="20dp"
                     android:paddingBottom="10dp"
-                    android:text="@string/list_of_cards_implementation"
+                    android:text="@string/blur_popup_implementation"
                     android:textColor="@color/grey_0_7"
                     android:textSize="14sp" />
 
@@ -52,6 +56,7 @@
         </ScrollView>
 
         <ImageView
+            android:id="@+id/drag_handle_image"
             style="@style/DragHandleLight"
             android:contentDescription="@string/drag_handle" />
 
@@ -61,4 +66,4 @@
 
     </androidx.cardview.widget.CardView>
 
-</RelativeLayout>
+</FrameLayout>

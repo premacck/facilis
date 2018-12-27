@@ -2,6 +2,7 @@ package com.prembros.facilis
 
 import android.os.Bundle
 import com.prembros.facilis.activity.BaseCardActivity
+import com.prembros.facilis.blurpopup.SampleBlurPopup
 import com.prembros.facilis.cardwithlist.CardWithListFragment
 import com.prembros.facilis.listofcards.ListOfCardsContainerFragment
 import com.prembros.facilis.plaincard.PlainCardFragment
@@ -21,9 +22,9 @@ class SelectionActivity : BaseCardActivity() {
 
         plainCardBtn.onElevatingClick { pushFragment(PlainCardFragment()) }
 
-        blurPopupBtn.onDebouncingClick {
-            //            TODO: push blurPopup
-        }
+        blurPopupFloatUpBtn.onDebouncingClick { pushPopup(SampleBlurPopup.newInstance(R.anim.float_up, R.anim.sink_down)) }
+
+        blurPopupZoomBtn.onDebouncingClick { pushPopup(SampleBlurPopup.newInstance(R.anim.zoom_in, R.anim.zoom_out)) }
 
         longPressBlurPopupBtn.onDebouncingClick {
             //            TODO: push long-press blur popup which gets dismissed on [ACTION_UP]

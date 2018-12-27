@@ -1,16 +1,11 @@
 package com.prembros.facilis.listofcards
 
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.RelativeLayout
 import com.prembros.facilis.fragment.BaseCardListChildFragment
 import com.prembros.facilis.sample.R
-import com.prembros.facilis.util.*
-import com.squareup.picasso.*
-import com.squareup.picasso.Target
+import com.prembros.facilis.util.dynamicHeightTarget
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_list_of_cards_child.*
 
 class ListOfCardsChildFragment : BaseCardListChildFragment() {
@@ -32,25 +27,7 @@ class ListOfCardsChildFragment : BaseCardListChildFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Picasso.get().load(imageUrl).into(getThumbnailHeightManipulatingTarget())
-    }
-
-    private fun getThumbnailHeightManipulatingTarget() = object : Target {
-        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-
-        override fun onBitmapFailed(e: Exception, errorDrawable: Drawable?) {
-            Log.e("onBitmapFailed", e.message, e)
-        }
-
-        override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-            if (activity == null) return
-
-            val width = (activity!!.windowManager.defaultDisplay.getScreenSize()[0] - activity!!.getDp(18f)).toInt()
-            val params = thumbnail.layoutParams as RelativeLayout.LayoutParams
-            params.height = width * bitmap.height / bitmap.width
-            thumbnail.layoutParams = params
-            thumbnail.setImageBitmap(bitmap)
-        }
+        Picasso.get().load(imageUrl).into(thumbnail.dynamicHeightTarget(activity))
     }
 
     override fun getDragView(): View? = dragArea

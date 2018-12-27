@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <scale
+        android:duration="200"
+        android:fromXScale="0%"
+        android:fromYScale="0%"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toXScale="102%"
+        android:toYScale="102%" />
+
+    <scale
+        android:duration="100"
+        android:fromXScale="102%"
+        android:fromYScale="102%"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:startOffset="200"
+        android:toXScale="98%"
+        android:toYScale="98%" />
+
+    <scale
+        android:duration="150"
+        android:fromXScale="98%"
+        android:fromYScale="98%"
+        android:interpolator="@android:anim/decelerate_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:startOffset="300"
+        android:toXScale="100%"
+        android:toYScale="100%" />
+
+    <alpha
+        android:duration="50"
+        android:fromAlpha="0"
+        android:startOffset="100"
+        android:toAlpha="1" />
+</set>

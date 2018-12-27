@@ -8,17 +8,17 @@
     <string name="card_with_list">Card With List Example</string>
     <string name="plain_card">Plain Card example</string>
     <string name="list_of_cards">List of cards example</string>
-    <string name="blur_popup">Blur Popup example</string>
+    <string name="blur_popup_float_up">Blur Popup with float animation</string>
+    <string name="blur_popup_zoom">Blur Popup with zoom animation</string>
     <string name="blur_popup_long_press">Long press Popup example</string>
     <string name="demo_background">Demo background</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="thumbnail">Thumbnail</string>
     <string name="this_is_a_sample_plain_card_fragment">This is a sample plain card fragment</string>
     <string name="you_can_swipe_down_from_anywhere_inside_to_dismiss_this_card">You can swipe down from anywhere inside to dismiss this card</string>
     <string name="card_item_">Card Item %1$d</string>
     <string name="this_is_a_card_fragment_with_a_recyclerview">This is a card fragment with a recyclerView</string>
-    <string name="card_with_list_implementation">It contains a basic implementation of recyclerView, you can scroll down form the top to dismiss this fragment.</string>
-    <string name="thumbnail">Thumbnail</string>
-    <string name="liat_of_cards_implementation">It contains an implementation of horizontal ViewPager, which has cards as children.\n\nYou can swipe down from the top of any card to dismiss all.</string>
+    <string name="card_with_list_implementation">It contains a basic implementation of recyclerView, you can swipe down form the top to dismiss this fragment.</string>
+    <string name="list_of_cards_implementation">It contains an implementation of horizontal ViewPager, which has cards as children.\n\nYou can swipe down from the top of any card to dismiss all.</string>
+    <string name="this_is_a_sample_blur_popup">This is a sample blur popup</string>
+    <string name="blur_popup_implementation">You can swipe down from the top of any card to dismiss all.\nOr you can click outside, on the blurred area to dismiss this popup.</string>
 </resources>

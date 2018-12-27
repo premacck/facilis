@@ -5,6 +5,12 @@ Swipe gesture based navigational library for Android.
 
 [Sample app on Play Store here](https://play.google.com/store/apps/details?id=com.prembros.facilis)
 
+
+<p align="center">
+<img src="https://github.com/steverichey/google-play-badge-svg/blob/master/img/en_get.svg" width="50%">
+</p>
+
+
 ## Getting Started
 
 To get this project into your build:

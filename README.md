@@ -7,7 +7,9 @@ Swipe gesture based navigational library for Android.
 
 
 <p align="center">
-<img src="https://github.com/steverichey/google-play-badge-svg/blob/master/img/en_get.svg" width="50%">
+	<a href="https://travis-ci.org/steverichey/google-play-badge-svg">
+		<img src="https://github.com/steverichey/google-play-badge-svg/blob/master/img/en_get.svg" width="50%">
+	</a>
 </p>
 
 

@@ -1,11 +1,16 @@
+<p align="center">
+	<img src="https://github.com/premacck/facilis/blob/master/app/src/main/ic_launcher-web.png" width="40%">
+</p>
+
 # Facilis
 [![](https://jitpack.io/v/premacck/facilis.svg)](https://jitpack.io/#premacck/facilis)
+
 
 Swipe gesture based navigational library for Android.
 
 <p align="center">
 	<a href="https://play.google.com/store/apps/details?id=com.prembros.facilis">
-		<img src="https://github.com/steverichey/google-play-badge-svg/blob/master/img/en_get.svg" width="50%">
+		<img src="https://github.com/steverichey/google-play-badge-svg/blob/master/img/en_get.svg" width="40%">
 	</a>
 </p>
 

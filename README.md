@@ -1,4 +1,5 @@
 # Facilis
+[![](https://jitpack.io/v/premacck/facilis.svg)](https://jitpack.io/#premacck/facilis)
 
 Swipe gesture based navigational library for Android.
 

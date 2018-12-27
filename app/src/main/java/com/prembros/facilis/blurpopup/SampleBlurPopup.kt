@@ -22,7 +22,7 @@ class SampleBlurPopup : BaseBlurPopup() {
     companion object {
         private const val ENTER_ANIM = "enterAnim"
         private const val EXIT_ANIM = "ExitAnim"
-        fun newInstance(@AnimRes enterAnim: Int, @AnimRes exitAnim: Int) = SampleBlurPopup().apply {
+        fun newInstance(@AnimRes enterAnim: Int = R.anim.zoom_in, @AnimRes exitAnim: Int = R.anim.zoom_out) = SampleBlurPopup().apply {
             arguments = Bundle().apply {
                 putInt(ENTER_ANIM, enterAnim)
                 putInt(EXIT_ANIM, exitAnim)

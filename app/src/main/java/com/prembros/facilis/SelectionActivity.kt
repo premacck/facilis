@@ -26,9 +26,9 @@ class SelectionActivity : BaseCardActivity() {
 
         blurPopupZoomBtn.onDebouncingClick { pushPopup(SampleBlurPopup.newInstance(R.anim.zoom_in, R.anim.zoom_out)) }
 
-        longPressBlurPopupBtn.onDebouncingClick {
-            //            TODO: push long-press blur popup which gets dismissed on [ACTION_UP]
-        }
+        LongPopupClickListener.inside(this)
+                .withPopup(SampleBlurPopup.newInstance())
+                .setOn(longPressBlurPopupBtn)
     }
 
     override fun getFragmentContainer(): Int = R.id.fragmentContainer

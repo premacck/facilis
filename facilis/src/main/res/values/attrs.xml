@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DeckViewPager">
+        <attr name="padding_percentage" format="integer" />
+        <attr name="padding_dp" format="dimension" />
+        <attr name="min_alpha" format="float" />
+    </declare-styleable>
+</resources>

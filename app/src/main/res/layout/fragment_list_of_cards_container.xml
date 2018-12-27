@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/MatchParentMatchParent">
 
     <io.alterac.blurkit.BlurLayout
         android:id="@+id/blurLayout"
         style="@style/BlurLayoutFullScreen" />
 
-    <androidx.viewpager.widget.ViewPager
+    <com.prembros.facilis.swiper.DeckViewPager
         android:id="@+id/cardViewPager"
         style="@style/MatchParentMatchParent"
-        android:clipToPadding="false"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp" />
+        app:min_alpha="0.4"
+        app:padding_percentage="10" />
 
 </RelativeLayout>

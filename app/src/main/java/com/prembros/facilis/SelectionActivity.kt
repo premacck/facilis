@@ -3,6 +3,7 @@ package com.prembros.facilis
 import android.os.Bundle
 import com.prembros.facilis.activity.BaseCardActivity
 import com.prembros.facilis.cardwithlist.CardWithListFragment
+import com.prembros.facilis.listofcards.ListOfCardsContainerFragment
 import com.prembros.facilis.plaincard.PlainCardFragment
 import com.prembros.facilis.sample.R
 import com.prembros.facilis.util.*
@@ -16,9 +17,7 @@ class SelectionActivity : BaseCardActivity() {
 
         cardWithListBtn.onReducingClick { pushFragment(CardWithListFragment()) }
 
-        listOfCardsBtn.onReducingClick {
-            //            TODO: launch list of cards
-        }
+        listOfCardsBtn.onReducingClick { pushFragment(ListOfCardsContainerFragment()) }
 
         plainCardBtn.onElevatingClick { pushFragment(PlainCardFragment()) }
 

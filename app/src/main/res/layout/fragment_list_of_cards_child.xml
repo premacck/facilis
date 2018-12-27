@@ -2,53 +2,54 @@
     style="@style/MatchParentMatchParent"
     android:animateLayoutChanges="true">
 
-    <io.alterac.blurkit.BlurLayout
-        android:id="@+id/blurLayout"
-        style="@style/BlurLayoutFullScreen" />
-
-    <androidx.cardview.widget.CardView
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/rootCard"
-        style="@style/CardView.Full">
+        style="@style/CardView.WrapHeight"
+        android:layout_centerInParent="true">
 
-        <RelativeLayout
-            style="@style/MatchParentMatchParent"
-            android:orientation="vertical">
+        <ScrollView style="@style/MatchParentMatchParent">
 
-            <ImageView
-                android:id="@+id/thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/thumbnail"
-                android:minHeight="100dp"
-                android:scaleType="centerCrop" />
+            <RelativeLayout
+                style="@style/MatchParentMatchParent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/header"
-                style="@style/MatchParentWrapContent"
-                android:layout_below="@+id/thumbnail"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:padding="20dp"
-                android:text="@string/this_is_a_card_fragment_with_a_recyclerview"
-                android:textColor="@color/grey"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/thumbnail"
+                    android:minHeight="100dp"
+                    android:scaleType="centerCrop" />
 
-            <TextView
-                android:id="@+id/info"
-                style="@style/MatchParentWrapContent"
-                android:layout_below="@+id/header"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:paddingStart="20dp"
-                android:paddingTop="10dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="10dp"
-                android:text="@string/liat_of_cards_implementation"
-                android:textColor="@color/grey_0_7"
-                android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/header"
+                    style="@style/MatchParentWrapContent"
+                    android:layout_below="@+id/thumbnail"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:padding="20dp"
+                    android:text="@string/this_is_a_card_fragment_with_a_recyclerview"
+                    android:textColor="@color/grey"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-        </RelativeLayout>
+                <TextView
+                    android:id="@+id/info"
+                    style="@style/MatchParentWrapContent"
+                    android:layout_below="@+id/header"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:paddingStart="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/liat_of_cards_implementation"
+                    android:textColor="@color/grey_0_7"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+        </ScrollView>
 
         <ImageView
             style="@style/DragHandleLight"

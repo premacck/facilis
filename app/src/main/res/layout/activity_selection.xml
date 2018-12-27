@@ -83,7 +83,7 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/blurPopupFloatUpBtn"
+                    android:id="@+id/blurPopupZoomBtn"
                     style="@style/WrapContentWrapContent"
                     android:layout_weight="1"
                     android:foreground="@drawable/ripple_light_rect_curved_corners"
@@ -105,7 +105,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/blurPopupZoomBtn"
+                    android:id="@+id/blurPopupFloatUpBtn"
                     style="@style/WrapContentWrapContent"
                     android:layout_weight="1"
                     android:foreground="@drawable/ripple_light_rect_curved_corners"

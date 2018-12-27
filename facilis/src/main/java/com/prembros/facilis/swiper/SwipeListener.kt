@@ -61,48 +61,12 @@ abstract class SwipeListener constructor(
         gestureDetector = object : GestureDetector(
                 activity,
                 object : SimpleOnGestureListener() {
-                    override fun onSingleTapUp(e: MotionEvent?): Boolean {
-                        return onSingleTap()
-                    }
+                    override fun onSingleTapUp(e: MotionEvent?): Boolean = onSingleTap()
 
-                    override fun onDown(e: MotionEvent): Boolean {
-                        return true
-                    }
+                    override fun onDown(e: MotionEvent): Boolean = true
 
-                    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-                        var result = false
-                        try {
-                            val diffY = e2.y - e1.y
-                            val diffX = e2.x - e1.x
-                            if (Math.abs(diffX) > Math.abs(diffY)) {
-                                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                                    isFlingInProgress = true
-                                    if (diffX > 0) {
-                                        onSwipeRight()
-                                    } else {
-                                        onSwipeLeft()
-                                    }
-                                    result = true
-                                } else {
-                                    isFlingInProgress = false
-                                }
-                            } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                                isFlingInProgress = true
-                                if (diffY > 0) {
-                                    onSwipeUp()
-                                } else {
-                                    discard(e2.rawY)
-                                }
-                                result = true
-                            } else {
-                                isFlingInProgress = false
-                            }
-                        } catch (exception: Exception) {
-                            Log.e("OnFling(): ", exception.message, exception)
-                            isFlingInProgress = false
-                        }
-                        return result
-                    }
+                    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean =
+                            handleFling(e1, e2, velocityY)
                 }
         ) {
             override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -137,6 +101,31 @@ abstract class SwipeListener constructor(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         return gestureDetector.onTouchEvent(event)
+    }
+
+    private fun handleFling(e1: MotionEvent, e2: MotionEvent, velocityY: Float): Boolean {
+        var result = false
+        try {
+            val diffY = e2.y - e1.y
+            val diffX = e2.x - e1.x
+            if (Math.abs(diffX) < Math.abs(diffY) && Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                isFlingInProgress = true
+                if (diffY < 0) {
+                    discard(e2.rawY)
+                } else {
+                    reset()
+                }
+                result = true
+            } else {
+                reset()
+                isFlingInProgress = false
+            }
+        } catch (exception: Exception) {
+            Log.e("OnFling(): ", exception.message, exception)
+            reset()
+            isFlingInProgress = false
+        }
+        return result
     }
 
     private fun handleActionDown(event: MotionEvent) {
@@ -212,18 +201,11 @@ abstract class SwipeListener constructor(
             if (Math.abs(percent) > SWIPE_THRESHOLD_PERCENT) {
                 if (direction == SwipeDirection.Down) {
                     discard(event.rawY)
-                    //                    Container swiped
                 } else {
-                    moveToOrigin(rootView)
-                    moveToOrigin(dragView)
-                    resetBackgroundView()
-                    //                    Container moved to origin
+                    reset()
                 }
             } else {
-                moveToOrigin(rootView)
-                moveToOrigin(dragView)
-                resetBackgroundView()
-                //                    Container moved to origin
+                reset()
             }
         }
 
@@ -239,14 +221,19 @@ abstract class SwipeListener constructor(
         val alpha = translationY / screenHeight
         backgroundView?.alpha = 1 - alpha
 
-
         /*
-        TODO: un-comment below block for scaling of backgroundLayout whole dragging
+        TODO: un-comment below block for scaling of backgroundLayout while dragging
         if (backgroundLayout != null && backgroundLayout!!.scaleX <= screenWidth) {
             backgroundLayout!!.scaleX = 1 + alpha / 10
             backgroundLayout!!.scaleY = 1 + alpha / 10
         }
         */
+    }
+
+    private fun reset() {
+        moveToOrigin(rootView)
+        moveToOrigin(dragView)
+        resetBackgroundView()
     }
 
     private fun moveToOrigin(view: View) {

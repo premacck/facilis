@@ -8,21 +8,23 @@ import androidx.annotation.*
 import com.prembros.facilis.R
 import io.alterac.blurkit.BlurLayout
 
-fun View.fadeIn(duration: Long = 280) = animate().alpha(1f).setDuration(duration).start()
+fun View.fadeIn(duration: Long = 280) = animate().alpha(1f).setDuration(duration).begin()
 
-fun View.fadeOut(duration: Long = 280) = animate().alpha(0f).setDuration(duration).start()
+fun View.fadeOut(duration: Long = 280) = animate().alpha(0f).setDuration(duration).begin()
 
-fun View.floatDown(delayMillis: Long = 50) = animate(R.anim.float_down, delayMillis).then { visibility = View.VISIBLE }
+fun View.floatDown(delayMillis: Long = 50) = animate(R.anim.float_down, delayMillis).then { makeVisible() }
 
-fun View.floatUp(delayMillis: Long = 20) = animate(R.anim.float_up, delayMillis).then { visibility = View.VISIBLE }
+fun View.floatUp(delayMillis: Long = 20) = animate(R.anim.float_up, delayMillis).then { makeVisible() }
 
-fun View.sinkDown() = animate(R.anim.sink_down).then { visibility = View.INVISIBLE }
+fun View.sinkDown() = animate(R.anim.sink_down).then { makeInvisible() }
 
-fun View.sinkUp() = animate(R.anim.sink_up).then { visibility = View.INVISIBLE }
+fun View.sinkUp() = animate(R.anim.sink_up).then { makeInvisible() }
 
 fun Context.animatorOf(@AnimatorRes animatorRes: Int): Animator = AnimatorInflater.loadAnimator(this, animatorRes)
 
-fun View.zoomOut() = animate(R.anim.zoom_out)
+fun View.zoomIn(delayMillis: Long = 50) = animate(R.anim.zoom_in, delayMillis).then { makeVisible() }
+
+fun View.zoomOut() = animate(R.anim.zoom_out).then { makeGone() }
 
 fun View.moveToBackGround(index: Int) {
     translateScaleAnimation(-getDp(if (index > 0) 44f else 24f), 0.92f).prepare().start()
@@ -50,6 +52,11 @@ fun View.translateScaleAnimation(translateValue: Float, scaleValue: Float): Obje
 fun ObjectAnimator.prepare(): ObjectAnimator {
     this.duration = 200
     this.interpolator = DecelerateInterpolator()
+    return this
+}
+
+fun ViewPropertyAnimator.begin(): ViewPropertyAnimator {
+    start()
     return this
 }
 
@@ -88,3 +95,5 @@ fun BlurLayout.beginBlur() {
         visibility = View.VISIBLE
     }, 80)
 }
+
+fun BlurLayout.stopBlur() = fadeOut().then { pauseBlur() }

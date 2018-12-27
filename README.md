@@ -9,7 +9,7 @@
 Swipe gesture based navigational library for Android.
 
 <p align="center">
-	<a href="https://play.google.com/store/apps/details?id=com.prembros.facilis">
+	<a href="https://play.google.com/store/apps/details?id=com.prembros.facilis.sample">
 		<img src="https://github.com/steverichey/google-play-badge-svg/blob/master/img/en_get.svg" width="40%">
 	</a>
 </p>

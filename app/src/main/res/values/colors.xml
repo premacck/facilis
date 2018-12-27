@@ -23,4 +23,5 @@
     <color name="grey_97">#f7f7f7</color>
     <color name="white_76_opaque">#4cffffff</color>
     <color name="candy_apple_red">#ff0800</color>
+    <color name="ic_launcher_background">#FF5722</color>
 </resources>

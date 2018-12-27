@@ -12,16 +12,23 @@ import org.jetbrains.anko.support.v4.find
 
 abstract class BaseCardFragment : BaseFragment(), CardContainer {
 
+    protected var isBlurEnabled = true
     var isInForeGround: Boolean = false
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.isClickable = true
         getRootView()?.run {
             setMargin(top = context.getDp(if (parentActivity().index > 0) 20f else 0f).toInt())
             isClickable = true
         }
         activity?.let { setupSwipeDownGesture(it) }
-        (getBackgroundBlurLayout() as? BlurLayout)?.beginBlur()
+        if (isBlurEnabled) {
+            getBackgroundBlurLayout()?.isClickable = true
+            (getBackgroundBlurLayout() as? BlurLayout)?.beginBlur()
+        } else {
+            getBackgroundBlurLayout()?.makeGone()
+        }
         isInForeGround = true
     }
 

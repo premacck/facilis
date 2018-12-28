@@ -37,7 +37,7 @@ allprojects {
 Add the dependency to your module's build.gradle
 ```
 dependencies {
-	implementation 'com.github.premacck:facilis:1.0.0'
+	implementation 'com.github.premacck:facilis:1.0.1'
 }
 ```
 

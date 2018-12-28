@@ -89,6 +89,7 @@ Add the dependency
 * [Deck ViewPager](https://github.com/bloderxd/deck) - Customized ViewPager
 * [Kotlin](https://kotlinlang.org/) - For less code
 * [Anko](https://github.com/Kotlin/anko) - For easier life
+* [BlurKit](https://github.com/CameraKit/blurkit-android) - For awesome blurring effects
 
 ## Contributing
 

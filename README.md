@@ -4,7 +4,7 @@
 
 # Facilis
 [![](https://jitpack.io/v/premacck/facilis.svg)](https://jitpack.io/#premacck/facilis)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-AsymmetricGridView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7409)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Facilis-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/7409)
 
 Swipe gesture based navigational library for Android.
 

@@ -8,7 +8,7 @@ import org.jetbrains.anko.toast
 
 class LongPopupClickListener private constructor(private val activity: BaseCardActivity) {
 
-    private lateinit var baseBlurPopup: BaseBlurPopup
+    private var baseBlurPopup: BaseBlurPopup? = null
     private var isLongPressStarted: Boolean = false
     private var isVibrationEnabled: Boolean = false
     private var vibrationDurationMillis: Long = DEFAULT_VIBRATION_DURATION
@@ -24,17 +24,19 @@ class LongPopupClickListener private constructor(private val activity: BaseCardA
         return this
     }
 
-    fun withPopup(baseBlurPopup: BaseBlurPopup): LongPopupClickListener {
+    fun withPopup(baseBlurPopup: BaseBlurPopup?): LongPopupClickListener {
         this.baseBlurPopup = baseBlurPopup
         return this
     }
 
     fun setOn(view: View) {
+        if (baseBlurPopup == null) throw IllegalStateException("BaseBlurPopup must be set by calling withPopup(BaseBlurPopup) before calling this method")
+
         view.setOnLongClickListener {
             if (!isLongPressStarted) {
                 isLongPressStarted = true
                 activity.vibrate(vibrationDurationMillis)
-                activity.pushPopup(baseBlurPopup)
+                activity.pushPopup(baseBlurPopup!!)
                 return@setOnLongClickListener true
             } else isLongPressStarted = false
             false

@@ -56,7 +56,7 @@ Add the dependency
 <dependency>
     <groupId>com.github.premacck</groupId>
     <artifactId>facilis</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -67,7 +67,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add the dependency
 ```
-libraryDependencies += "com.github.premacck" % "facilis" % "1.0.0"
+libraryDependencies += "com.github.premacck" % "facilis" % "1.0.1"
 ```
 
 ### Leiningen
@@ -77,7 +77,7 @@ Add it in your project.clj at the end of repositories:
 ```
 Add the dependency
 ```
-:dependencies [[com.github.premacck/facilis "1.0.0"]]
+:dependencies [[com.github.premacck/facilis "1.0.1"]]
 ```
 
 ### Usage
@@ -85,11 +85,12 @@ Add the dependency
 
 ## Built With
 
-* [Picasso](http://square.github.io/picasso/) - Image loading
 * [Deck ViewPager](https://github.com/bloderxd/deck) - Customized ViewPager
 * [Kotlin](https://kotlinlang.org/) - For less code
 * [Anko](https://github.com/Kotlin/anko) - For easier life
 * [BlurKit](https://github.com/CameraKit/blurkit-android) - For awesome blurring effects
+
+* [Picasso](http://square.github.io/picasso/) - Image loading in sample app
 
 ## Contributing
 

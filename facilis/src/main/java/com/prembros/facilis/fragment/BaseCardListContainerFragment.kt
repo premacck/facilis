@@ -35,7 +35,7 @@ abstract class BaseCardListContainerFragment : BaseFragment(), CardContainer {
 
     override fun getRootView(): ViewGroup? = viewPager()
 
-    abstract fun baseCardToInflate(position: Int): BaseCardFragment
+    abstract fun baseCardToInflate(position: Int): BaseCardListChildFragment
 
     override fun moveToBackGround() {
         viewPager().moveToBackGround(parentActivity().index)
@@ -59,7 +59,7 @@ abstract class BaseCardListContainerFragment : BaseFragment(), CardContainer {
     internal class BaseCardContainerPagerAdapter(fm: FragmentManager, baseCardContainerFragment: BaseCardListContainerFragment) : FragmentStatePagerAdapter(fm) {
 
         private val ref: WeakReference<BaseCardListContainerFragment> = WeakReference(baseCardContainerFragment)
-        var currentCard: BaseCardFragment? = null
+        var currentCard: BaseCardListChildFragment? = null
 
         override fun getItem(position: Int): Fragment? = ref.get()?.baseCardToInflate(position)
 
@@ -67,7 +67,7 @@ abstract class BaseCardListContainerFragment : BaseFragment(), CardContainer {
 
         override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {
             if (currentCard !== `object`) {
-                currentCard = `object` as? BaseCardFragment
+                currentCard = `object` as? BaseCardListChildFragment
             }
             super.setPrimaryItem(container, position, `object`)
         }

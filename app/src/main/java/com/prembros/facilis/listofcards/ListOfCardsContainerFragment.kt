@@ -29,7 +29,7 @@ class ListOfCardsContainerFragment : BaseCardListContainerFragment() {
     override fun viewPager(): ViewPager = cardViewPager
 
     /**
-     * Put here what you'd put in the [getItem(position: Int)] method of the [ViewPager]
+     * Put here the [BaseCardListChildFragment] that you'd put in the [getItem(position: Int)] method of the [ViewPager]
      */
-    override fun baseCardToInflate(position: Int): BaseCardFragment = ListOfCardsChildFragment.newInstance(getRandomImageUrl())
+    override fun baseCardToInflate(position: Int): BaseCardListChildFragment = ListOfCardsChildFragment.newInstance(getRandomImageUrl())
 }

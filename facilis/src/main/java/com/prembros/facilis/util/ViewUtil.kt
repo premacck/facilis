@@ -4,10 +4,14 @@ import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Context
 import android.graphics.Point
-import android.os.*
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.TypedValue
-import android.view.*
+import android.view.Display
 import android.view.MotionEvent.*
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -15,9 +19,12 @@ import androidx.annotation.ColorRes
 import androidx.fragment.app.Fragment
 import com.prembros.facilis.R
 import com.prembros.facilis.swiper.SwipeListener
-import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import org.jetbrains.anko.runOnUiThread
-import org.jetbrains.anko.sdk27.coroutines.*
+import org.jetbrains.anko.sdk27.coroutines.onTouch
+import org.jetbrains.anko.sdk27.coroutines.textChangedListener
 
 fun Context.getDp(dp: Float): Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
 
@@ -118,8 +125,6 @@ fun View.longClickWithVibrate(action: () -> Unit) {
     }
 }
 
-fun View.onCustomLongClick(longClickDelay: Int = 300, action: () -> Unit) = setOnTouchListener(getCustomOnLongClickListener(longClickDelay) { action() })
-
 fun View.onDebouncingClick(action: () -> Unit) {
     setOnClickListener {
         if (isEnabled) {
@@ -192,56 +197,6 @@ fun View.onElevatingClick(launchDelay: Long = 100, elevateBy: Float = 4f, action
         }
     }
     onDebouncingClick { this.context.doAfterDelay(launchDelay) { action() } }
-}
-
-fun View.clearOnClickListener() = setOnClickListener(null)
-
-private fun View.getCustomOnLongClickListener(longClickDelay: Int = 300, action: () -> Unit): View.OnTouchListener {
-    return object : View.OnTouchListener {
-        private var isLongPress = false
-        private lateinit var originPoint: FloatArray
-        private lateinit var latestPoint: FloatArray
-        private var downTime: Long = 0
-
-        private fun arePointsWithinBounds(): Boolean {
-            val deltaX = Math.abs(originPoint[0] - latestPoint[0])
-            val deltaY = Math.abs(originPoint[1] - latestPoint[1])
-            return deltaX <= 15 && deltaY <= 15
-        }
-
-        private fun isTimeWithinBounds(): Boolean {
-            return Math.abs(downTime - SystemClock.elapsedRealtime()) <= longClickDelay
-        }
-
-        override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-            when (event?.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    downTime = SystemClock.elapsedRealtime()
-                    originPoint = floatArrayOf(event.rawX, event.rawY)
-                    latestPoint = originPoint
-                    isLongPress = true
-                    this@getCustomOnLongClickListener.postDelayed({
-                        if (isLongPress && arePointsWithinBounds()) {
-                            isLongPress = false
-                            vibrate(20)
-                            action()
-                        }
-                    }, longClickDelay.toLong())
-                }
-                MotionEvent.ACTION_UP -> {
-                    if (isLongPress && arePointsWithinBounds() && isTimeWithinBounds()) {
-                        isLongPress = false
-                        performClick()
-                        return false
-                    }
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    latestPoint = floatArrayOf(event.rawX, event.rawY)
-                }
-            }
-            return true
-        }
-    }
 }
 
 inline fun <reified T : View> Array<T>.onClick(crossinline action: (view: View) -> Unit) {

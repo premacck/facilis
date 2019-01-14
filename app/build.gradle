@@ -10,6 +10,7 @@ androidExtensions {
 
 android {
     compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.prembros.facilis.sample"
         minSdkVersion 21
@@ -25,7 +26,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '28.0.3'
 }
 
 dependencies {
@@ -35,11 +35,11 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation "androidx.annotation:annotation:$androidxAnnotation"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.anko:anko:$ankoVersion"
-    implementation "'io.alterac.blurkit:blurkit:$blurkitVersion"
+    implementation "io.alterac.blurkit:blurkit:$blurkitVersion"
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation project(':facilis')
 }

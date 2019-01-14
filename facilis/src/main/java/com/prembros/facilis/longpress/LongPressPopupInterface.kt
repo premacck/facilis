@@ -1,7 +1,6 @@
 package com.prembros.facilis.longpress
 
-import android.view.MotionEvent
-import android.view.View
+import android.view.*
 
 interface LongPressPopupInterface {
 
@@ -20,7 +19,7 @@ interface LongPressPopupInterface {
     /**
      * Called when a press event stops before reaching the long press needed time
      */
-    fun onPressStop(motionEvent: MotionEvent)
+    fun onPressStop(motionEvent: MotionEvent?)
 
     /**
      * Called when the button has been long pressed for long enough, passing the last touch

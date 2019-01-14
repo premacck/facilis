@@ -1,16 +1,55 @@
 package com.prembros.facilis.dialog
 
+import android.content.DialogInterface
+import android.os.Bundle
 import android.view.*
 import androidx.annotation.*
 import com.prembros.facilis.R
 import com.prembros.facilis.activity.BaseCardActivity
+import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType
+import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_BOTTOM
 import com.prembros.facilis.fragment.BaseFragment
+import com.prembros.facilis.longpress.*
 import com.prembros.facilis.util.*
 import io.alterac.blurkit.BlurLayout
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
+fun BaseBlurPopup.withEnterAnim(@AnimRes enterAnim: Int): BaseBlurPopup {
+    enterAnimRes = enterAnim
+    return this
+}
+
+fun BaseBlurPopup.withExitAnim(@AnimRes exitAnim: Int): BaseBlurPopup {
+    exitAnimRes = exitAnim
+    return this
+}
+
 @Suppress("DeferredResultUnused")
 abstract class BaseBlurPopup : BaseDialogFragment() {
+
+    internal var container: ViewGroup? = null
+    var popupTag: String? = null
+    internal var isLongPressPopup: Boolean = false
+    internal var popupStateListener: PopupStateListener? = null
+    internal var popupTouchListener: PopupTouchListener? = null
+    var overrideWindowAnimations: Boolean = false
+    @AnimRes
+    internal var enterAnimRes: Int = R.anim.float_up
+    @AnimRes
+    internal var exitAnimRes: Int = R.anim.sink_down
+    @AnimType
+    internal var animationType: Int = ANIM_FROM_BOTTOM
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        resolveEnterExitAnim(animationType)
+    }
+
+    @CallSuper
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        this.container = container
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onStart() {
         super.onStart()
@@ -43,7 +82,7 @@ abstract class BaseBlurPopup : BaseDialogFragment() {
         getParentActivity().pushFragment(baseFragment, isAddToBackStack)
     }
 
-    protected fun getParentActivity(): BaseCardActivity = activity as? BaseCardActivity
+    fun getParentActivity(): BaseCardActivity = activity as? BaseCardActivity
             ?: throw IllegalStateException("parent activity of this popup must be a BaseCardActivity")
 
     @CallSuper
@@ -53,6 +92,12 @@ abstract class BaseBlurPopup : BaseDialogFragment() {
         getRootView()?.animation?.run {}
                 ?: getRootView()?.animate(dismissAnimation())?.then { super.dismiss() }
                 ?: super.dismiss()
+    }
+
+    override fun onDismiss(dialog: DialogInterface?) {
+        popupStateListener?.onPopupDismiss(popupTag)
+        popupTouchListener?.stopPress(null)
+        super.onDismiss(dialog)
     }
 
     /**

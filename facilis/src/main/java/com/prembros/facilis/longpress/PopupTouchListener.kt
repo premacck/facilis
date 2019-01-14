@@ -1,32 +1,33 @@
 package com.prembros.facilis.longpress
 
+import android.annotation.SuppressLint
 import android.os.Handler
-import android.view.MotionEvent
+import android.view.*
 import android.view.MotionEvent.*
-import android.view.View
 import androidx.annotation.IntDef
 import com.prembros.facilis.dialog.BaseBlurPopup
-import com.prembros.facilis.longpress.LongPopupClickListener.PressStatus.Companion.STATUS_LONG_PRESSING
-import com.prembros.facilis.longpress.LongPopupClickListener.PressStatus.Companion.STATUS_NOT_PRESSED
-import com.prembros.facilis.longpress.LongPopupClickListener.PressStatus.Companion.STATUS_PRESSING
+import com.prembros.facilis.longpress.PopupTouchListener.PressStatus.Companion.STATUS_LONG_PRESSING
+import com.prembros.facilis.longpress.PopupTouchListener.PressStatus.Companion.STATUS_NOT_PRESSED
+import com.prembros.facilis.longpress.PopupTouchListener.PressStatus.Companion.STATUS_PRESSING
 import com.prembros.facilis.util.vibrate
 
-class LongPopupClickListener internal constructor(private val mPressPopupInterface: LongPressPopupInterface) {
+class PopupTouchListener internal constructor(private val mPressPopupInterface: LongPressPopupInterface) : View.OnTouchListener {
 
+    //    TODO: to be moved to [LongPressBlurPopup]
     private lateinit var baseBlurPopup: BaseBlurPopup
     private var isVibrationEnabled: Boolean = false
     private var vibrationDurationMillis: Long = DEFAULT_VIBRATION_DURATION
 
     @PressStatus
     private var mCurrentPressStatus = STATUS_NOT_PRESSED
-    private val mLongClickDuration: Int = DEFAULT_LONG_PRESS_DURATION
+    private val mLongPressDuration: Int = DEFAULT_LONG_PRESS_DURATION
     private var mStartPressTimestamp: Long = 0
 
     private val mLongPressHandler: Handler = Handler()
     private val mLongPressRunnable = object : RunnableMotionEvent() {
         override fun run() {
             // If pressing and time valid, register longPressing
-            if (mCurrentPressStatus == STATUS_PRESSING && System.currentTimeMillis() - mStartPressTimestamp >= mLongClickDuration) {
+            if (mCurrentPressStatus == STATUS_PRESSING && System.currentTimeMillis() - mStartPressTimestamp >= mLongPressDuration) {
                 startLongPress(startView, lastMotionEvent!!)
             }
         }
@@ -34,58 +35,62 @@ class LongPopupClickListener internal constructor(private val mPressPopupInterfa
 
     companion object {
         private const val DEFAULT_VIBRATION_DURATION = 50L
-        private const val DEFAULT_LONG_PRESS_DURATION = 350
-        fun inside(longPressPopupInterface: LongPressPopupInterface): LongPopupClickListener = LongPopupClickListener(longPressPopupInterface)
+        internal const val DEFAULT_LONG_PRESS_DURATION = 350
+        fun inside(longPressPopupInterface: LongPressPopupInterface): PopupTouchListener = PopupTouchListener(longPressPopupInterface)
     }
 
-    fun withVibration(durationMillis: Long = DEFAULT_VIBRATION_DURATION): LongPopupClickListener {
+    fun withVibration(durationMillis: Long = DEFAULT_VIBRATION_DURATION): PopupTouchListener {
         isVibrationEnabled = true
         vibrationDurationMillis = durationMillis
         return this
     }
 
-    fun withPopup(baseBlurPopup: BaseBlurPopup): LongPopupClickListener {
+    fun withPopup(baseBlurPopup: BaseBlurPopup): PopupTouchListener {
         this.baseBlurPopup = baseBlurPopup
         return this
     }
 
     fun setOn(targetView: View) {
-        targetView.setOnTouchListener { view, motionEvent ->
-            when (motionEvent.action) {
-                ACTION_DOWN, ACTION_MOVE -> {
-                    when (mCurrentPressStatus) {
-                        STATUS_NOT_PRESSED -> startPress(view, motionEvent)
-                        STATUS_PRESSING -> {
-                            if (System.currentTimeMillis() - mStartPressTimestamp > mLongClickDuration) {
-                                startLongPress(view, motionEvent)
-                            } else {
-                                continuePress(motionEvent, getPressStatusPercentage())
-                            }
+        if (baseBlurPopup == null) throw IllegalStateException("BaseBlurPopup must be set by calling withPopup(BaseBlurPopup) before calling this method")
+        targetView.setOnTouchListener(this)
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouch(view: View, motionEvent: MotionEvent): Boolean {
+        when (motionEvent.action) {
+            ACTION_DOWN, ACTION_MOVE -> {
+                when (mCurrentPressStatus) {
+                    STATUS_NOT_PRESSED -> startPress(view, motionEvent)
+                    STATUS_PRESSING -> {
+                        if (System.currentTimeMillis() - mStartPressTimestamp > mLongPressDuration) {
+                            startLongPress(view, motionEvent)
+                        } else {
+                            continuePress(motionEvent, getPressStatusPercentage())
                         }
-                        STATUS_LONG_PRESSING -> continueLongPress(motionEvent, getLongPressDuration())
                     }
-                }
-                ACTION_UP, ACTION_CANCEL, ACTION_OUTSIDE -> {
-                    when (mCurrentPressStatus) {
-                        STATUS_NOT_PRESSED -> {
-                        }
-                        STATUS_PRESSING -> stopPress(motionEvent)
-                        STATUS_LONG_PRESSING -> stopLongPress(motionEvent)
-                    }
-                    if (mCurrentPressStatus == STATUS_LONG_PRESSING) {
-                        view.parent.requestDisallowInterceptTouchEvent(true)
-                    }
+                    STATUS_LONG_PRESSING -> continueLongPress(motionEvent, getLongPressDuration())
                 }
             }
-            mCurrentPressStatus == STATUS_LONG_PRESSING
+            ACTION_UP, ACTION_CANCEL, ACTION_OUTSIDE -> {
+                when (mCurrentPressStatus) {
+                    STATUS_NOT_PRESSED -> {
+                    }
+                    STATUS_PRESSING -> stopPress(motionEvent)
+                    STATUS_LONG_PRESSING -> stopLongPress(motionEvent)
+                }
+                if (mCurrentPressStatus == STATUS_LONG_PRESSING) {
+                    view.parent.requestDisallowInterceptTouchEvent(true)
+                }
+            }
         }
+        return mCurrentPressStatus == STATUS_LONG_PRESSING
     }
 
     // Standard press methods
     private fun startPress(touchedView: View, motionEvent: MotionEvent) {
 
         // Add 10 milliseconds to avoid premature runnable calls
-        mLongPressHandler.postDelayed(mLongPressRunnable, (mLongClickDuration + 10).toLong())
+        mLongPressHandler.postDelayed(mLongPressRunnable, (mLongPressDuration + 10).toLong())
 
         updateLastMotionEventRunnable(motionEvent)
         updateRunnableView(touchedView)
@@ -104,7 +109,7 @@ class LongPopupClickListener internal constructor(private val mPressPopupInterfa
         updateLastMotionEventRunnable(motionEvent)
     }
 
-    fun stopPress(motionEvent: MotionEvent) {
+    fun stopPress(motionEvent: MotionEvent?) {
         mPressPopupInterface.onPressStop(motionEvent)
 
         resetPressVariables()
@@ -147,9 +152,9 @@ class LongPopupClickListener internal constructor(private val mPressPopupInterfa
         mLongPressHandler.removeCallbacks(mLongPressRunnable)
     }
 
-    private fun getLongPressDuration(): Int = (System.currentTimeMillis() - mStartPressTimestamp - mLongClickDuration.toLong()).toInt()
+    private fun getLongPressDuration(): Int = (System.currentTimeMillis() - mStartPressTimestamp - mLongPressDuration.toLong()).toInt()
 
-    private fun getPressStatusPercentage(): Int = ((System.currentTimeMillis() - mStartPressTimestamp) / mLongClickDuration * 100).toInt()
+    private fun getPressStatusPercentage(): Int = ((System.currentTimeMillis() - mStartPressTimestamp) / mLongPressDuration * 100).toInt()
 
     @kotlin.annotation.Retention
     @IntDef(STATUS_NOT_PRESSED, STATUS_PRESSING, STATUS_LONG_PRESSING)

@@ -4,27 +4,25 @@ import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Context
 import android.graphics.Point
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.os.*
 import android.util.TypedValue
-import android.view.Display
+import android.view.*
 import android.view.MotionEvent.*
-import android.view.View
-import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.ColorRes
 import androidx.fragment.app.Fragment
 import com.prembros.facilis.R
+import com.prembros.facilis.dialog.BaseBlurPopup
+import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType
+import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_BOTTOM
+import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_LEFT
+import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_RIGHT
+import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_TOP
 import com.prembros.facilis.swiper.SwipeListener
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import org.jetbrains.anko.runOnUiThread
-import org.jetbrains.anko.sdk27.coroutines.onTouch
-import org.jetbrains.anko.sdk27.coroutines.textChangedListener
+import kotlinx.coroutines.*
+import org.jetbrains.anko.sdk27.coroutines.*
 
 fun Context.getDp(dp: Float): Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
 
@@ -219,7 +217,7 @@ fun Fragment.doAfterDelay(delayMillis: Long, action: () -> Unit) = context?.doAf
 fun Context?.doAfterDelay(delayMillis: Long, action: () -> Unit) {
     GlobalScope.async {
         delay(delayMillis)
-        this@doAfterDelay?.run { runOnUiThread { action() } }
+        this@doAfterDelay?.run { Handler(Looper.getMainLooper()).post(Runnable { action() }) }
     }
 }
 
@@ -239,3 +237,40 @@ inline fun <reified T : View> ViewGroup.getIfPresent(): T? {
 fun View.hideSoftKeyboard() = (context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.hideSoftInputFromWindow(windowToken, 0)
 
 fun View.showSoftKeyboard() = (context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+
+fun MotionEvent.isTouchInsideView(view: View): Boolean {
+    val motionEventX = rawX.toInt()
+    val motionEventY = rawY.toInt()
+
+    val location = IntArray(2)
+    view.getLocationOnScreen(location)
+    val x = location[0]
+    val y = location[1]
+    val w = view.width
+    val h = view.height
+
+    return !(motionEventX < x || motionEventX > x + w || motionEventY < y || motionEventY > y + h)
+}
+
+fun BaseBlurPopup.resolveEnterExitAnim(@AnimType animType: Int) {
+    if (overrideWindowAnimations) {
+        when (animType) {
+            ANIM_FROM_BOTTOM -> {
+                enterAnimRes = R.anim.float_up
+                exitAnimRes = R.anim.sink_down
+            }
+            ANIM_FROM_TOP -> {
+                enterAnimRes = R.anim.float_down
+                exitAnimRes = R.anim.sink_up
+            }
+            ANIM_FROM_LEFT -> {
+                enterAnimRes = R.anim.float_right
+                exitAnimRes = R.anim.sink_left
+            }
+            ANIM_FROM_RIGHT -> {
+                enterAnimRes = R.anim.float_left
+                exitAnimRes = R.anim.sink_right
+            }
+        }
+    }
+}

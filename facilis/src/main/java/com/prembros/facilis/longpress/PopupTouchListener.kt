@@ -5,22 +5,21 @@ import android.os.Handler
 import android.view.*
 import android.view.MotionEvent.*
 import androidx.annotation.IntDef
-import com.prembros.facilis.dialog.BaseBlurPopup
 import com.prembros.facilis.longpress.PopupTouchListener.PressStatus.Companion.STATUS_LONG_PRESSING
 import com.prembros.facilis.longpress.PopupTouchListener.PressStatus.Companion.STATUS_NOT_PRESSED
 import com.prembros.facilis.longpress.PopupTouchListener.PressStatus.Companion.STATUS_PRESSING
 import com.prembros.facilis.util.vibrate
 
-class PopupTouchListener internal constructor(private val mPressPopupInterface: LongPressPopupInterface) : View.OnTouchListener {
+class PopupTouchListener internal constructor(
+        private val mPressPopupInterface: LongPressPopupInterface,
+        private val mLongPressDuration: Int = DEFAULT_LONG_PRESS_DURATION
+) : View.OnTouchListener {
 
-    //    TODO: to be moved to [LongPressBlurPopup]
-    private lateinit var baseBlurPopup: BaseBlurPopup
     private var isVibrationEnabled: Boolean = false
     private var vibrationDurationMillis: Long = DEFAULT_VIBRATION_DURATION
 
     @PressStatus
     private var mCurrentPressStatus = STATUS_NOT_PRESSED
-    private val mLongPressDuration: Int = DEFAULT_LONG_PRESS_DURATION
     private var mStartPressTimestamp: Long = 0
 
     private val mLongPressHandler: Handler = Handler()
@@ -39,19 +38,12 @@ class PopupTouchListener internal constructor(private val mPressPopupInterface: 
         fun inside(longPressPopupInterface: LongPressPopupInterface): PopupTouchListener = PopupTouchListener(longPressPopupInterface)
     }
 
-    fun withVibration(durationMillis: Long = DEFAULT_VIBRATION_DURATION): PopupTouchListener {
+    fun withVibration(durationMillis: Long = DEFAULT_VIBRATION_DURATION): PopupTouchListener = apply {
         isVibrationEnabled = true
         vibrationDurationMillis = durationMillis
-        return this
-    }
-
-    fun withPopup(baseBlurPopup: BaseBlurPopup): PopupTouchListener {
-        this.baseBlurPopup = baseBlurPopup
-        return this
     }
 
     fun setOn(targetView: View) {
-        if (baseBlurPopup == null) throw IllegalStateException("BaseBlurPopup must be set by calling withPopup(BaseBlurPopup) before calling this method")
         targetView.setOnTouchListener(this)
     }
 

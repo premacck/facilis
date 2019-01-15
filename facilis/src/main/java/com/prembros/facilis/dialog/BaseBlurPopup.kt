@@ -14,15 +14,13 @@ import com.prembros.facilis.util.*
 import io.alterac.blurkit.BlurLayout
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
-fun BaseBlurPopup.withEnterAnim(@AnimRes enterAnim: Int): BaseBlurPopup {
-    enterAnimRes = enterAnim
-    return this
-}
+fun BaseBlurPopup.withEnterAnim(@AnimRes enterAnim: Int): BaseBlurPopup = apply { enterAnimRes = enterAnim }
 
-fun BaseBlurPopup.withExitAnim(@AnimRes exitAnim: Int): BaseBlurPopup {
-    exitAnimRes = exitAnim
-    return this
-}
+fun BaseBlurPopup.withExitAnim(@AnimRes exitAnim: Int): BaseBlurPopup = apply { exitAnimRes = exitAnim }
+
+fun BaseBlurPopup.withAnimType(@AnimType animType: Int): BaseBlurPopup = apply { animationType = animType }
+
+fun BaseBlurPopup.setDismissOnTouchOutside(dismissOnTouchingOutside: Boolean) = apply { dismissOnTouchOutside = dismissOnTouchingOutside }
 
 @Suppress("DeferredResultUnused")
 abstract class BaseBlurPopup : BaseDialogFragment() {
@@ -33,6 +31,7 @@ abstract class BaseBlurPopup : BaseDialogFragment() {
     internal var popupStateListener: PopupStateListener? = null
     internal var popupTouchListener: PopupTouchListener? = null
     var overrideWindowAnimations: Boolean = false
+    internal var dismissOnTouchOutside: Boolean = true
     @AnimRes
     internal var enterAnimRes: Int = R.anim.float_up
     @AnimRes
@@ -58,7 +57,7 @@ abstract class BaseBlurPopup : BaseDialogFragment() {
             activity?.runOnUiThread {
                 getBlurLayout()?.beginBlur()
                 getRootView()?.run {
-                    animate(enterAnimation()).then {
+                    animate(enterAnimRes).then {
                         visibility = View.VISIBLE
                         isClickable = true
                     }
@@ -67,7 +66,7 @@ abstract class BaseBlurPopup : BaseDialogFragment() {
                 doOnStart()
             }
         }
-        getBlurLayout()?.onClick { activity?.onBackPressed() }
+        getBlurLayout()?.onClick { if (dismissOnTouchOutside) activity?.onBackPressed() }
     }
 
     override fun onStop() {
@@ -90,7 +89,7 @@ abstract class BaseBlurPopup : BaseDialogFragment() {
         getRootView()?.hideSoftKeyboard()
         getBlurLayout()?.fadeOut()
         getRootView()?.animation?.run {}
-                ?: getRootView()?.animate(dismissAnimation())?.then { super.dismiss() }
+                ?: getRootView()?.animate(exitAnimRes)?.then { super.dismiss() }
                 ?: super.dismiss()
     }
 
@@ -106,12 +105,6 @@ abstract class BaseBlurPopup : BaseDialogFragment() {
     open fun doOnStart() {}
 
     open fun doOnStop() {}
-
-    @AnimRes
-    open fun enterAnimation(): Int = R.anim.float_up
-
-    @AnimRes
-    open fun dismissAnimation(): Int = R.anim.sink_down
 
     abstract fun getBlurLayout(): BlurLayout?
 

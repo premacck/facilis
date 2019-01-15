@@ -11,35 +11,36 @@ import com.prembros.facilis.longpress.*
 import com.prembros.facilis.longpress.PopupTouchListener.Companion.DEFAULT_LONG_PRESS_DURATION
 import com.prembros.facilis.util.isTouchInsideView
 
+@Suppress("MemberVisibilityCanBePrivate", "unused")
 open class LongPressBlurPopup private constructor(builder: Builder) : LongPressPopupInterface {
 
-    internal var baseBlurPopup: BaseBlurPopup = builder.baseBlurPopup
-    internal var parentActivity: BaseCardActivity = builder.parentActivity
-    internal var mTag: String = builder.tag
-    internal var mViewTarget: View = builder.targetView
-    internal var rootPopupView: ViewGroup? = builder.rootPopupView
-    internal var mInitialPressedView: View? = null
+    internal val baseBlurPopup: BaseBlurPopup = builder.baseBlurPopup
+    internal val parentActivity: BaseCardActivity = builder.parentActivity
+    internal val popupTag: String = builder.tag
+    internal val targetView: View = builder.targetView
+    internal val rootPopupView: ViewGroup? = builder.rootPopupView
+    internal var initialPressedView: View? = null
 
-    internal var mPopupTouchListener: PopupTouchListener? = null
-    internal var mInflaterListener: PopupInflaterListener? = builder.popupInflaterListener
-    internal var mLongPressReleaseClickListener: View.OnClickListener? = builder.longPressReleaseClickListener
-    internal var mOnHoverListener: PopupHoverListener? = builder.hoverListener
-    internal var mPopupListener: PopupStateListener? = builder.baseBlurPopup.popupStateListener
+    internal val popupInflaterListener: PopupInflaterListener? = builder.popupInflaterListener
+    internal val longPressReleaseClickListener: View.OnClickListener? = builder.longPressReleaseClickListener
+    internal val popupHoverListener: PopupHoverListener? = builder.hoverListener
+    internal val popupStateListener: PopupStateListener? = builder.baseBlurPopup.popupStateListener
+    internal var popupTouchListener: PopupTouchListener? = null
 
-    private var mRegistered: Boolean = false
-    private val mLongPressDuration: Int = builder.longPressDuration
-    private var mDismissOnLongPressStop: Boolean = builder.dismissOnLongPressStop
-    private var mDismissOnTouchOutside: Boolean = builder.dismissOnTouchOutside
-    private var mDispatchTouchEventOnRelease: Boolean = builder.dispatchTouchEventOnRelease
-    private var mCancelTouchOnDragOutsideView: Boolean = builder.cancelTouchOnDragOutsideView
+    private val longPressDuration: Int = builder.longPressDuration
+    private val isDismissOnLongPressStop: Boolean = builder.dismissOnLongPressStop
+    private val isDismissOnTouchOutside: Boolean = builder.dismissOnTouchOutside
+    private val isDispatchTouchEventOnRelease: Boolean = builder.dispatchTouchEventOnRelease
+    private val isCancelTouchOnDragOutsideView: Boolean = builder.cancelTouchOnDragOutsideView
+    private var isRegistered: Boolean = false
     @AnimType
-    private var animationType: Int = builder.baseBlurPopup.animationType
+    private val animationType: Int = builder.animationType
 
     /**
      * Show the popup manually
      */
     fun showNow() {
-        if (!mRegistered) {
+        if (!isRegistered) {
             register()
         }
         showBlurPopup()
@@ -49,7 +50,7 @@ open class LongPressBlurPopup private constructor(builder: Builder) : LongPressP
      * Dismiss the popup manually
      */
     fun dismissNow() {
-        if (!mRegistered) {
+        if (!isRegistered) {
             register()
         }
         dismissBlurPopup()
@@ -57,20 +58,20 @@ open class LongPressBlurPopup private constructor(builder: Builder) : LongPressP
 
     @CallSuper
     open fun register() {
-        checkNotNull(mViewTarget)
+        checkNotNull(targetView)
 
-        baseBlurPopup.popupTouchListener = PopupTouchListener(this)
-        mPopupTouchListener = baseBlurPopup.popupTouchListener
-        mViewTarget.setOnTouchListener(mPopupTouchListener)
-        mRegistered = true
+        baseBlurPopup.popupTouchListener = PopupTouchListener(this, longPressDuration)
+        popupTouchListener = baseBlurPopup.popupTouchListener
+        targetView.setOnTouchListener(popupTouchListener)
+        isRegistered = true
     }
 
     @CallSuper
     open fun unregister() {
-        mPopupTouchListener?.stopPress(null)
+        popupTouchListener?.stopPress(null)
         dismissBlurPopup()
-        mViewTarget.setOnTouchListener(null)
-        mRegistered = false
+        targetView.setOnTouchListener(null)
+        isRegistered = false
     }
 
     private fun showBlurPopup() {
@@ -79,48 +80,48 @@ open class LongPressBlurPopup private constructor(builder: Builder) : LongPressP
 
         if (baseBlurPopup.isVisible) baseBlurPopup.dismiss()
 
-        parentActivity.pushPopup(baseBlurPopup)
+        parentActivity.pushPopup(baseBlurPopup.withAnimType(animationType).setDismissOnTouchOutside(isDismissOnTouchOutside))
 
-        mInflaterListener?.onViewInflated(mTag, rootPopupView)
-        mPopupListener?.onPopupShow(mTag)
+        popupInflaterListener?.onViewInflated(popupTag, rootPopupView)
+        popupStateListener?.onPopupShow(popupTag)
     }
 
     private fun dismissBlurPopup() {
         if (baseBlurPopup.isVisible) baseBlurPopup.dismiss()
 
-        mPopupListener?.onPopupDismiss(mTag)
+        popupStateListener?.onPopupDismiss(popupTag)
     }
 
     override fun onPressStart(pressedView: View, motionEvent: MotionEvent) {
-        mInitialPressedView = pressedView
+        initialPressedView = pressedView
     }
 
     override fun onPressContinue(progress: Int, motionEvent: MotionEvent) {
-        if (mCancelTouchOnDragOutsideView && mInitialPressedView != null && motionEvent.isTouchInsideView(mInitialPressedView!!)) {
-            mPopupTouchListener?.stopPress(motionEvent)
+        if (isCancelTouchOnDragOutsideView && initialPressedView != null && motionEvent.isTouchInsideView(initialPressedView!!)) {
+            popupTouchListener?.stopPress(motionEvent)
         }
     }
 
     override fun onPressStop(motionEvent: MotionEvent?) {
-        mInitialPressedView = null
+        initialPressedView = null
     }
 
     override fun onLongPressStart(motionEvent: MotionEvent) = showBlurPopup()
 
     override fun onLongPressContinue(longPressTime: Int, motionEvent: MotionEvent) {
-        if (mDispatchTouchEventOnRelease || mOnHoverListener != null) {
+        if (isDispatchTouchEventOnRelease || popupHoverListener != null) {
             rootPopupView.dispatchActiveFocusToLeavesOnly(motionEvent)
         }
     }
 
     override fun onLongPressEnd(motionEvent: MotionEvent) {
-        if (mDispatchTouchEventOnRelease && rootPopupView != null) {
+        if (isDispatchTouchEventOnRelease && rootPopupView != null) {
             rootPopupView.dispatchClickToLeavesOnly(motionEvent)
         }
-        if (mDismissOnLongPressStop) {
+        if (isDismissOnLongPressStop) {
             dismissBlurPopup()
         }
-        mInitialPressedView = null
+        initialPressedView = null
     }
 
     private fun ViewGroup?.dispatchActiveFocusToLeavesOnly(motionEvent: MotionEvent) {
@@ -149,7 +150,7 @@ open class LongPressBlurPopup private constructor(builder: Builder) : LongPressP
                 child.dispatchClickToLeavesOnly(motionEvent)
             } else {
                 if (motionEvent.isTouchInsideView(child)) {
-                    mLongPressReleaseClickListener?.onClick(child) ?: child.performClick()
+                    longPressReleaseClickListener?.onClick(child) ?: child.performClick()
                 }
             }
         }
@@ -160,14 +161,14 @@ open class LongPressBlurPopup private constructor(builder: Builder) : LongPressP
     private fun View.setFocus() {
         if (!isInFocus()) {
             isPressed = true
-            mOnHoverListener?.onHoverChanged(this, true)
+            popupHoverListener?.onHoverChanged(this, true)
         }
     }
 
     private fun View.removeFocus() {
         if (isInFocus()) {
             isPressed = false
-            mOnHoverListener?.onHoverChanged(this, false)
+            popupHoverListener?.onHoverChanged(this, false)
         }
     }
 
@@ -196,6 +197,8 @@ open class LongPressBlurPopup private constructor(builder: Builder) : LongPressP
         internal var dismissOnTouchOutside: Boolean = true
         internal var dispatchTouchEventOnRelease: Boolean = true
         internal var cancelTouchOnDragOutsideView: Boolean = true
+        @AnimType
+        internal var animationType: Int = ANIM_FROM_BOTTOM
 
         companion object {
             fun with(parentActivity: BaseCardActivity) = Builder().apply { this.parentActivity = parentActivity }
@@ -227,7 +230,7 @@ open class LongPressBlurPopup private constructor(builder: Builder) : LongPressP
 
         fun cancelTouchOnDragOutsideView(cancelTouchOnDragOutsideView: Boolean) = apply { this.cancelTouchOnDragOutsideView = cancelTouchOnDragOutsideView }
 
-        fun animationType(@AnimType animationType: Int) = apply { baseBlurPopup.animationType = animationType }
+        fun animationType(@AnimType animationType: Int) = apply { this.animationType = animationType }
 
         fun build() = LongPressBlurPopup(this)
     }

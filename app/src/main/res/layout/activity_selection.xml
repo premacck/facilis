@@ -15,7 +15,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:orientation="vertical"
-            tools:context="com.prembros.facilis.SelectionActivity">
+            tools:context="com.prembros.facilis.implementation.SelectionActivity">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardWithListBtn"

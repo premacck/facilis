@@ -22,11 +22,9 @@ class SampleBlurPopup : BaseBlurPopup() {
         return inflater.inflate(R.layout.popup_sample_blur, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val url = getRandomImageUrl()
-        Log.d("URL: ", url)
-        Picasso.get().load(url).into(popupThumbnail.dynamicHeightTarget(activity))
+    override fun onStart() {
+        super.onStart()
+        Picasso.get().load(getRandomImageUrl()).into(popupThumbnail.dynamicHeightTarget(activity))
     }
 
     /**

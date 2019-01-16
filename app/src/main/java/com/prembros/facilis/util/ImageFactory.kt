@@ -2,7 +2,7 @@ package com.prembros.facilis.util
 
 import java.util.*
 
-private val imageList = arrayListOf(
+internal val imageList = arrayListOf(
         "https://miro.medium.com/max/854/1*WgROsTKa6diRYTG5K0R5mw.jpeg",
         "http://newnation.sg/wp-content/uploads/random-pic-internet-22.jpg",
         "https://i.redd.it/5uyrc8opy9uy.jpg",

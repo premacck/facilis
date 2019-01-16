@@ -22,10 +22,7 @@
     <string name="this_is_a_sample_blur_popup">This is a sample blur popup</string>
     <string name="blur_popup_implementation">You can swipe down from the top of any card to dismiss all.\nOr you can click outside, on the blurred area to dismiss this popup.</string>
     <string name="click_to_open_another_card_with_list">Click to open another Card with list</string>
-    <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Fusce ornarevestibulum erat sagittis sollicitudin.
-        Morbi varius eros eget velit congue finibus.
-        Etiam accumsan est augue, vel blandit mauris is a nu pretium malesuada.
-    </string>
+    <string name="recyclerview_implementation">RecyclerView implementation</string>
+    <string name="scrollview_implementation">ScrollView implementation</string>
+    <string name="facilis_sample">Facilis Sample</string>
 </resources>

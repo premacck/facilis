@@ -63,7 +63,7 @@ class PopupTouchListener internal constructor(
                     STATUS_LONG_PRESSING -> continueLongPress(motionEvent, getLongPressDuration())
                 }
             }
-            ACTION_UP, ACTION_CANCEL, ACTION_OUTSIDE -> {
+            ACTION_UP, ACTION_CANCEL -> {
                 when (mCurrentPressStatus) {
                     STATUS_NOT_PRESSED -> {
                     }
@@ -78,15 +78,12 @@ class PopupTouchListener internal constructor(
         return mCurrentPressStatus == STATUS_LONG_PRESSING
     }
 
-    // Standard press methods
+    //region Standard press methods
     private fun startPress(touchedView: View, motionEvent: MotionEvent) {
-
-        // Add 10 milliseconds to avoid premature runnable calls
+//        Add 10 milliseconds to avoid premature runnable calls
         mLongPressHandler.postDelayed(mLongPressRunnable, (mLongPressDuration + 10).toLong())
 
         updateLastMotionEventRunnable(motionEvent)
-        updateRunnableView(touchedView)
-
         updateRunnableView(touchedView)
 
         mStartPressTimestamp = System.currentTimeMillis()
@@ -97,13 +94,11 @@ class PopupTouchListener internal constructor(
 
     private fun continuePress(motionEvent: MotionEvent, pressStatus: Int) {
         mPressPopupInterface.onPressContinue(pressStatus, motionEvent)
-
         updateLastMotionEventRunnable(motionEvent)
     }
 
     fun stopPress(motionEvent: MotionEvent?) {
         mPressPopupInterface.onPressStop(motionEvent)
-
         resetPressVariables()
     }
 
@@ -127,6 +122,7 @@ class PopupTouchListener internal constructor(
         mPressPopupInterface.onLongPressEnd(motionEvent)
         resetPressVariables()
     }
+    //endregion
 
     private fun updateLastMotionEventRunnable(motionEvent: MotionEvent) {
         mLongPressRunnable.lastMotionEvent = motionEvent

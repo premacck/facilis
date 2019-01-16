@@ -3,13 +3,10 @@ package com.prembros.facilis.dialog
 import android.view.*
 import androidx.annotation.*
 import com.prembros.facilis.activity.BaseCardActivity
-import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_BOTTOM
-import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_LEFT
-import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_RIGHT
-import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_TOP
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_BOTTOM
 import com.prembros.facilis.longpress.*
 import com.prembros.facilis.longpress.PopupTouchListener.Companion.DEFAULT_LONG_PRESS_DURATION
-import com.prembros.facilis.util.isTouchInsideView
+import com.prembros.facilis.util.*
 
 @Suppress("MemberVisibilityCanBePrivate", "unused")
 open class LongPressBlurPopup private constructor(builder: Builder) : LongPressPopupInterface {
@@ -32,7 +29,7 @@ open class LongPressBlurPopup private constructor(builder: Builder) : LongPressP
     private val isDismissOnTouchOutside: Boolean = builder.dismissOnTouchOutside
     private val isDispatchTouchEventOnRelease: Boolean = builder.dispatchTouchEventOnRelease
     private val isCancelTouchOnDragOutsideView: Boolean = builder.cancelTouchOnDragOutsideView
-    private var isRegistered: Boolean = false
+    var isRegistered: Boolean = false
     @AnimType
     private val animationType: Int = builder.animationType
 
@@ -87,7 +84,7 @@ open class LongPressBlurPopup private constructor(builder: Builder) : LongPressP
     }
 
     private fun dismissBlurPopup() {
-        if (baseBlurPopup.isVisible) baseBlurPopup.dismiss()
+        if (baseBlurPopup.isVisible) baseBlurPopup.getParentActivity().onBackPressed()
 
         popupStateListener?.onPopupDismiss(popupTag)
     }
@@ -97,7 +94,7 @@ open class LongPressBlurPopup private constructor(builder: Builder) : LongPressP
     }
 
     override fun onPressContinue(progress: Int, motionEvent: MotionEvent) {
-        if (isCancelTouchOnDragOutsideView && initialPressedView != null && motionEvent.isTouchInsideView(initialPressedView!!)) {
+        if (isCancelTouchOnDragOutsideView && initialPressedView != null && !motionEvent.isTouchInsideView(initialPressedView!!)) {
             popupTouchListener?.stopPress(motionEvent)
         }
     }
@@ -169,17 +166,6 @@ open class LongPressBlurPopup private constructor(builder: Builder) : LongPressP
         if (isInFocus()) {
             isPressed = false
             popupHoverListener?.onHoverChanged(this, false)
-        }
-    }
-
-    @kotlin.annotation.Retention
-    @IntDef(ANIM_FROM_LEFT, ANIM_FROM_RIGHT, ANIM_FROM_TOP, ANIM_FROM_BOTTOM)
-    annotation class AnimType {
-        companion object {
-            const val ANIM_FROM_LEFT = 0
-            const val ANIM_FROM_RIGHT = 1
-            const val ANIM_FROM_TOP = 2
-            const val ANIM_FROM_BOTTOM = 3
         }
     }
 

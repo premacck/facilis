@@ -6,21 +6,12 @@ import android.view.*
 import androidx.annotation.*
 import com.prembros.facilis.R
 import com.prembros.facilis.activity.BaseCardActivity
-import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType
-import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_BOTTOM
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_BOTTOM
 import com.prembros.facilis.fragment.BaseFragment
 import com.prembros.facilis.longpress.*
 import com.prembros.facilis.util.*
 import io.alterac.blurkit.BlurLayout
 import org.jetbrains.anko.sdk27.coroutines.onClick
-
-fun BaseBlurPopup.withEnterAnim(@AnimRes enterAnim: Int): BaseBlurPopup = apply { enterAnimRes = enterAnim }
-
-fun BaseBlurPopup.withExitAnim(@AnimRes exitAnim: Int): BaseBlurPopup = apply { exitAnimRes = exitAnim }
-
-fun BaseBlurPopup.withAnimType(@AnimType animType: Int): BaseBlurPopup = apply { animationType = animType }
-
-fun BaseBlurPopup.setDismissOnTouchOutside(dismissOnTouchingOutside: Boolean) = apply { dismissOnTouchOutside = dismissOnTouchingOutside }
 
 @Suppress("DeferredResultUnused")
 abstract class BaseBlurPopup : BaseDialogFragment() {

@@ -11,15 +11,14 @@ import android.view.MotionEvent.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.annotation.ColorRes
+import androidx.annotation.*
 import androidx.fragment.app.Fragment
 import com.prembros.facilis.R
-import com.prembros.facilis.dialog.BaseBlurPopup
-import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType
-import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_BOTTOM
-import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_LEFT
-import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_RIGHT
-import com.prembros.facilis.dialog.LongPressBlurPopup.AnimType.Companion.ANIM_FROM_TOP
+import com.prembros.facilis.dialog.*
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_BOTTOM
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_LEFT
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_RIGHT
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_TOP
 import com.prembros.facilis.swiper.SwipeListener
 import kotlinx.coroutines.*
 import org.jetbrains.anko.sdk27.coroutines.*
@@ -123,14 +122,12 @@ fun View.longClickWithVibrate(action: () -> Unit) {
     }
 }
 
-fun View.onDebouncingClick(action: () -> Unit) {
-    setOnClickListener {
-        if (isEnabled) {
-            isEnabled = false
-            action()
-            postDelayed({ isEnabled = true }, 100)
-        }
-    }
+fun <T : View> T.onDebouncingClick(listener: DebouncingClickListener) = setOnClickListener(listener)
+
+fun <T : View> T.onDebouncingClick(action: T.() -> Unit) {
+    setOnClickListener(object : DebouncingClickListener {
+        override fun onDebouncingClick(view: View) = action()
+    })
 }
 
 fun View.onReducingClick(launchDelay: Long = 100, action: () -> Unit) {
@@ -274,3 +271,15 @@ fun BaseBlurPopup.resolveEnterExitAnim(@AnimType animType: Int) {
         }
     }
 }
+
+fun LongPressBlurPopup?.checkAndUnregister() {
+    if (this != null && !isRegistered) unregister()
+}
+
+fun BaseBlurPopup.withEnterAnim(@AnimRes enterAnim: Int): BaseBlurPopup = apply { enterAnimRes = enterAnim }
+
+fun BaseBlurPopup.withExitAnim(@AnimRes exitAnim: Int): BaseBlurPopup = apply { exitAnimRes = exitAnim }
+
+fun BaseBlurPopup.withAnimType(@AnimType animType: Int): BaseBlurPopup = apply { animationType = animType }
+
+fun BaseBlurPopup.setDismissOnTouchOutside(dismissOnTouchingOutside: Boolean) = apply { dismissOnTouchOutside = dismissOnTouchingOutside }

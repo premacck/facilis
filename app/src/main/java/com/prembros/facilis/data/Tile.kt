@@ -5,4 +5,4 @@ import androidx.annotation.ColorRes
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Tile(var text: String, @ColorRes var colorRes: Int, var type: Int) : Parcelable
+data class Tile(var text: String, @ColorRes var colorRes: Int, var imageUrl: String) : Parcelable

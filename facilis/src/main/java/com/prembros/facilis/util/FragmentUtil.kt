@@ -100,7 +100,7 @@ fun FragmentManager.pushFragment(resId: Int, card: BaseFragment, tag: String, in
 fun FragmentManager.pushPopup(resId: Int, popup: BaseDialogFragment, tag: String) {
     this.beginTransaction()
             .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-            .add(resId, popup, tag)
+            .add(resId, popup, popup.tag ?: tag)
             .addToBackStack(tag)
             .commit()
 }

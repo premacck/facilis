@@ -8,13 +8,9 @@ androidExtensions {
     experimental = true
 }
 
-ext {
-    androidSupportVersion = '28.0.0'
-    ankoVersion = '0.10.8'
-}
-
 android {
     compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
@@ -29,18 +25,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '28.0.3'
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation "androidx.core:core-ktx:1.0.1"
+    implementation "androidx.appcompat:appcompat:$androidxAppcompat"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.annotation:annotation:1.0.1'
+    implementation "androidx.annotation:annotation:$androidxAnnotation"
     implementation "org.jetbrains.anko:anko:$ankoVersion"
-    implementation 'io.alterac.blurkit:blurkit:1.0.0'
+    implementation "io.alterac.blurkit:blurkit:$blurkitVersion"
 }

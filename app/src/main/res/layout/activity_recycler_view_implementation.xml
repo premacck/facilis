@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/MatchParentMatchParent"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout style="@style/MatchParentWrapContent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/MatchParentWrapContent"
+            app:contentInsetEnd="16dp"
+            app:layout_scrollFlags="scroll|snap|enterAlways"
+            app:title="@string/recyclerview_implementation"
+            app:titleTextColor="@android:color/white" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        style="@style/MatchParentMatchParent"
+        android:clipToPadding="false"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:listitem="@layout/item_card_tile" />
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        style="@style/MatchParentMatchParent"
+        android:elevation="9dp" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

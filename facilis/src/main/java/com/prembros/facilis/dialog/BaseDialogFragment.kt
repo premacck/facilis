@@ -2,7 +2,6 @@ package com.prembros.facilis.dialog
 
 import androidx.fragment.app.DialogFragment
 import com.prembros.facilis.util.doAfterDelay
-import org.jetbrains.anko.support.v4.runOnUiThread
 
 /**
  * Base class for all the dialog fragments in the app
@@ -13,7 +12,7 @@ abstract class BaseDialogFragment : DialogFragment() {
     @Suppress("DeferredResultUnused")
     fun smartDismiss(afterDismissAction: () -> Unit) {
         dismiss()
-        doAfterDelay(280) { runOnUiThread { afterDismissAction() } }
+        doAfterDelay(280) { afterDismissAction() }
     }
 
     /**

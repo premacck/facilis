@@ -85,12 +85,13 @@ Add the dependency
 
 ## Built With
 
-* [Deck ViewPager](https://github.com/bloderxd/deck) - Customized ViewPager
 * [Kotlin](https://kotlinlang.org/) - For less code
 * [Anko](https://github.com/Kotlin/anko) - For easier life
+* [Picasso](http://square.github.io/picasso/) - Image loading
+* [Deck ViewPager](https://github.com/bloderxd/deck) - Customized ViewPager
 * [BlurKit](https://github.com/CameraKit/blurkit-android) - For awesome blurring effects
-
-* [Picasso](http://square.github.io/picasso/) - Image loading in sample app
+* [LongPressPopup](https://github.com/RiccardoMoro/LongPressPopup) - For long press popups
+* [DebouncingClickListener](https://github.com/JakeWharton/butterknife/blob/master/butterknife-runtime/src/main/java/butterknife/internal/DebouncingClickListener.java) - for safe clicks
 
 ## Contributing
 

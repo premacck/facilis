@@ -11,12 +11,17 @@ import android.view.MotionEvent.*
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.annotation.ColorRes
+import androidx.annotation.*
 import androidx.fragment.app.Fragment
 import com.prembros.facilis.R
+import com.prembros.facilis.dialog.*
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_BOTTOM
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_CENTER
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_LEFT
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_RIGHT
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_TOP
 import com.prembros.facilis.swiper.SwipeListener
 import kotlinx.coroutines.*
-import org.jetbrains.anko.runOnUiThread
 import org.jetbrains.anko.sdk27.coroutines.*
 
 fun Context.getDp(dp: Float): Float = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
@@ -118,16 +123,12 @@ fun View.longClickWithVibrate(action: () -> Unit) {
     }
 }
 
-fun View.onCustomLongClick(longClickDelay: Int = 300, action: () -> Unit) = setOnTouchListener(getCustomOnLongClickListener(longClickDelay) { action() })
+fun <T : View> T.onDebouncingClick(listener: DebouncingClickListener) = setOnClickListener(listener)
 
-fun View.onDebouncingClick(action: () -> Unit) {
-    setOnClickListener {
-        if (isEnabled) {
-            isEnabled = false
-            action()
-            postDelayed({ isEnabled = true }, 100)
-        }
-    }
+fun <T : View> T.onDebouncingClick(action: T.() -> Unit) {
+    setOnClickListener(object : DebouncingClickListener {
+        override fun onDebouncingClick(view: View) = action()
+    })
 }
 
 fun View.onReducingClick(launchDelay: Long = 100, action: () -> Unit) {
@@ -194,56 +195,6 @@ fun View.onElevatingClick(launchDelay: Long = 100, elevateBy: Float = 4f, action
     onDebouncingClick { this.context.doAfterDelay(launchDelay) { action() } }
 }
 
-fun View.clearOnClickListener() = setOnClickListener(null)
-
-private fun View.getCustomOnLongClickListener(longClickDelay: Int = 300, action: () -> Unit): View.OnTouchListener {
-    return object : View.OnTouchListener {
-        private var isLongPress = false
-        private lateinit var originPoint: FloatArray
-        private lateinit var latestPoint: FloatArray
-        private var downTime: Long = 0
-
-        private fun arePointsWithinBounds(): Boolean {
-            val deltaX = Math.abs(originPoint[0] - latestPoint[0])
-            val deltaY = Math.abs(originPoint[1] - latestPoint[1])
-            return deltaX <= 15 && deltaY <= 15
-        }
-
-        private fun isTimeWithinBounds(): Boolean {
-            return Math.abs(downTime - SystemClock.elapsedRealtime()) <= longClickDelay
-        }
-
-        override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-            when (event?.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    downTime = SystemClock.elapsedRealtime()
-                    originPoint = floatArrayOf(event.rawX, event.rawY)
-                    latestPoint = originPoint
-                    isLongPress = true
-                    this@getCustomOnLongClickListener.postDelayed({
-                        if (isLongPress && arePointsWithinBounds()) {
-                            isLongPress = false
-                            vibrate(20)
-                            action()
-                        }
-                    }, longClickDelay.toLong())
-                }
-                MotionEvent.ACTION_UP -> {
-                    if (isLongPress && arePointsWithinBounds() && isTimeWithinBounds()) {
-                        isLongPress = false
-                        performClick()
-                        return false
-                    }
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    latestPoint = floatArrayOf(event.rawX, event.rawY)
-                }
-            }
-            return true
-        }
-    }
-}
-
 inline fun <reified T : View> Array<T>.onClick(crossinline action: (view: View) -> Unit) {
     for (view in this) {
         view.onDebouncingClick { action(view) }
@@ -264,7 +215,7 @@ fun Fragment.doAfterDelay(delayMillis: Long, action: () -> Unit) = context?.doAf
 fun Context?.doAfterDelay(delayMillis: Long, action: () -> Unit) {
     GlobalScope.async {
         delay(delayMillis)
-        this@doAfterDelay?.run { runOnUiThread { action() } }
+        this@doAfterDelay?.run { Handler(Looper.getMainLooper()).post(Runnable { action() }) }
     }
 }
 
@@ -284,3 +235,56 @@ inline fun <reified T : View> ViewGroup.getIfPresent(): T? {
 fun View.hideSoftKeyboard() = (context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.hideSoftInputFromWindow(windowToken, 0)
 
 fun View.showSoftKeyboard() = (context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+
+fun MotionEvent.isTouchInsideView(view: View): Boolean {
+    val motionEventX = rawX.toInt()
+    val motionEventY = rawY.toInt()
+
+    val location = IntArray(2)
+    view.getLocationOnScreen(location)
+    val x = location[0]
+    val y = location[1]
+    val w = view.width
+    val h = view.height
+
+    return !(motionEventX < x || motionEventX > x + w || motionEventY < y || motionEventY > y + h)
+}
+
+fun BaseBlurPopup.resolveEnterExitAnim(@AnimType animType: Int) {
+    if (overrideWindowAnimations) {
+        when (animType) {
+            ANIM_FROM_BOTTOM -> {
+                enterAnimRes = R.anim.float_up
+                exitAnimRes = R.anim.sink_down
+            }
+            ANIM_FROM_TOP -> {
+                enterAnimRes = R.anim.float_down
+                exitAnimRes = R.anim.sink_up
+            }
+            ANIM_FROM_LEFT -> {
+                enterAnimRes = R.anim.float_right
+                exitAnimRes = R.anim.sink_left
+            }
+            ANIM_FROM_RIGHT -> {
+                enterAnimRes = R.anim.float_left
+                exitAnimRes = R.anim.sink_right
+            }
+            ANIM_FROM_CENTER -> {
+                enterAnimRes = R.anim.zoom_in
+                exitAnimRes = R.anim.zoom_out
+            }
+        }
+    }
+}
+
+fun LongPressBlurPopup?.checkAndUnregister() {
+    if (this != null && !isRegistered) unregister()
+}
+
+fun BaseBlurPopup.withEnterAnim(@AnimRes enterAnim: Int): BaseBlurPopup = apply { enterAnimRes = enterAnim }
+
+fun BaseBlurPopup.withExitAnim(@AnimRes exitAnim: Int): BaseBlurPopup = apply { exitAnimRes = exitAnim }
+
+fun BaseBlurPopup.withAnimType(@AnimType animType: Int): BaseBlurPopup = apply { animationType = animType }
+
+fun BaseBlurPopup.setDismissOnTouchOutside(dismissOnTouchingOutside: Boolean) = apply { dismissOnTouchOutside = dismissOnTouchingOutside }

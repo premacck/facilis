@@ -4,7 +4,7 @@
 
 # Facilis
 [![](https://jitpack.io/v/premacck/facilis.svg)](https://jitpack.io/#premacck/facilis)
-
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Facilis-yellowgreen.svg?style=flat)](https://android-arsenal.com/details/1/7409)
 
 Swipe gesture based navigational library for Android.
 
@@ -14,7 +14,9 @@ Swipe gesture based navigational library for Android.
 	</a>
 </p>
 
-[![YouTube demo](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YlNkM7NfZec&t=1s)
+Watch Demo Video:
+
+[![YouTube demo](https://github.com/premacck/facilis/blob/master/video_thumb.png)](https://www.youtube.com/watch?v=YlNkM7NfZec&t=1s)
 
 ## Getting Started
 
@@ -35,7 +37,7 @@ allprojects {
 Add the dependency to your module's build.gradle
 ```
 dependencies {
-	implementation 'com.github.premacck:facilis:1.0.0'
+	implementation 'com.github.premacck:facilis:1.0.1'
 }
 ```
 
@@ -54,7 +56,7 @@ Add the dependency
 <dependency>
     <groupId>com.github.premacck</groupId>
     <artifactId>facilis</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -65,7 +67,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add the dependency
 ```
-libraryDependencies += "com.github.premacck" % "facilis" % "1.0.0"
+libraryDependencies += "com.github.premacck" % "facilis" % "1.0.1"
 ```
 
 ### Leiningen
@@ -75,7 +77,7 @@ Add it in your project.clj at the end of repositories:
 ```
 Add the dependency
 ```
-:dependencies [[com.github.premacck/facilis "1.0.0"]]
+:dependencies [[com.github.premacck/facilis "1.0.1"]]
 ```
 
 ### Usage
@@ -83,10 +85,11 @@ Add the dependency
 
 ## Built With
 
-* [Picasso](http://square.github.io/picasso/) - Image loading
-* [Deck ViewPager](https://github.com/bloderxd/deck) - Customized ViewPager
 * [Kotlin](https://kotlinlang.org/) - For less code
 * [Anko](https://github.com/Kotlin/anko) - For easier life
+* [Picasso](http://square.github.io/picasso/) - Image loading
+* [Deck ViewPager](https://github.com/bloderxd/deck) - Customized ViewPager
+* [BlurKit](https://github.com/CameraKit/blurkit-android) - For awesome blurring effects
 * [LongPressPopup](https://github.com/RiccardoMoro/LongPressPopup) - For long press popups
 * [DebouncingClickListener](https://github.com/JakeWharton/butterknife/blob/master/butterknife-runtime/src/main/java/butterknife/internal/DebouncingClickListener.java) - for safe clicks
 

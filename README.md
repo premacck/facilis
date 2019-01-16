@@ -37,7 +37,7 @@ allprojects {
 Add the dependency to your module's build.gradle
 ```
 dependencies {
-	implementation 'com.github.premacck:facilis:1.0.1'
+	implementation 'com.github.premacck:facilis:1.1.0'
 }
 ```
 
@@ -56,7 +56,7 @@ Add the dependency
 <dependency>
     <groupId>com.github.premacck</groupId>
     <artifactId>facilis</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -67,7 +67,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add the dependency
 ```
-libraryDependencies += "com.github.premacck" % "facilis" % "1.0.1"
+libraryDependencies += "com.github.premacck" % "facilis" % "1.0"
 ```
 
 ### Leiningen
@@ -77,7 +77,7 @@ Add it in your project.clj at the end of repositories:
 ```
 Add the dependency
 ```
-:dependencies [[com.github.premacck/facilis "1.0.1"]]
+:dependencies [[com.github.premacck/facilis "1.1.0"]]
 ```
 
 ### Usage

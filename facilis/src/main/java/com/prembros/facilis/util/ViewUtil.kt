@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import com.prembros.facilis.R
 import com.prembros.facilis.dialog.*
 import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_BOTTOM
+import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_CENTER
 import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_LEFT
 import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_RIGHT
 import com.prembros.facilis.dialog.AnimType.Companion.ANIM_FROM_TOP
@@ -267,6 +268,10 @@ fun BaseBlurPopup.resolveEnterExitAnim(@AnimType animType: Int) {
             ANIM_FROM_RIGHT -> {
                 enterAnimRes = R.anim.float_left
                 exitAnimRes = R.anim.sink_right
+            }
+            ANIM_FROM_CENTER -> {
+                enterAnimRes = R.anim.zoom_in
+                exitAnimRes = R.anim.zoom_out
             }
         }
     }

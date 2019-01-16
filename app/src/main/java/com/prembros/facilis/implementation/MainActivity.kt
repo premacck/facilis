@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         recyclerViewImplementation.onReducingClick { startActivity(intentFor<RecyclerViewImplementationActivity>()) }
 
-        scrollViewImplementation.onElevatingClick { startActivity(intentFor<SelectionActivity>()) }
+        scrollViewImplementation.onDebouncingClick { startActivity(intentFor<SelectionActivity>()) }
 
         epoxyImplementation.onReducingClick { startActivity(intentFor<EpoxyImplementationActivity>()) }
     }

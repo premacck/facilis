@@ -9,8 +9,8 @@
 
     <TextView
         style="@style/MatchParentWrapContent"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="100dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="@string/facilis_sample"
@@ -35,22 +35,16 @@
 
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
+    <Button
         android:id="@+id/scrollViewImplementation"
         style="@style/WrapContentWrapContent"
         android:layout_marginBottom="24dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
-
-        <TextView
-            style="@style/WrapContentWrapContent"
-            android:padding="20dp"
-            android:text="@string/scrollview_implementation"
-            android:textAllCaps="false"
-            android:textColor="@color/grey"
-            android:textSize="20sp" />
-
-    </androidx.cardview.widget.CardView>
+        android:background="@drawable/bg_white_btn"
+        android:padding="20dp"
+        android:text="@string/scrollview_implementation"
+        android:textAllCaps="false"
+        android:textColor="@color/grey"
+        android:textSize="20sp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/epoxyImplementation"

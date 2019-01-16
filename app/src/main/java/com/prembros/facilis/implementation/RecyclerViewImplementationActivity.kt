@@ -6,11 +6,12 @@ import com.prembros.facilis.implementation.adapter.CardsAdapter
 import com.prembros.facilis.sample.R
 import kotlinx.android.synthetic.main.activity_recycler_view_implementation.*
 
-class RecyclerViewImplementationActivity : BaseCardActivity() {
+class RecyclerViewImplementationActivity : BaseChildActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recycler_view_implementation)
+        initToolbar(toolbar)
         recyclerView.adapter = CardsAdapter(this)
     }
 

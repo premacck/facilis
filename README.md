@@ -67,7 +67,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 ```
 Add the dependency
 ```
-libraryDependencies += "com.github.premacck" % "facilis" % "1.0"
+libraryDependencies += "com.github.premacck" % "facilis" % "1.1.0"
 ```
 
 ### Leiningen

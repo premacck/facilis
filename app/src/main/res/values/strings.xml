@@ -24,5 +24,6 @@
     <string name="click_to_open_another_card_with_list">Click to open another Card with list</string>
     <string name="recyclerview_implementation">RecyclerView implementation</string>
     <string name="scrollview_implementation">ScrollView implementation</string>
+    <string name="epoxy_implementation">Epoxy implementation</string>
     <string name="facilis_sample">Facilis Sample</string>
 </resources>

@@ -24,6 +24,7 @@
         </activity>
         <activity android:name="com.prembros.facilis.implementation.SelectionActivity" />
         <activity android:name="com.prembros.facilis.implementation.RecyclerViewImplementationActivity" />
+        <activity android:name="com.prembros.facilis.implementation.EpoxyImplementationActivity" />
     </application>
 
 </manifest>

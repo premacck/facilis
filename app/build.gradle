@@ -8,6 +8,10 @@ androidExtensions {
     experimental = true
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
@@ -42,5 +46,7 @@ dependencies {
     implementation "org.jetbrains.anko:anko:$ankoVersion"
     implementation "io.alterac.blurkit:blurkit:$blurkitVersion"
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation "com.airbnb.android:epoxy:$epoxyVersion"
+    kapt "com.airbnb.android:epoxy-processor:$epoxyVersion"
     implementation project(':facilis')
 }

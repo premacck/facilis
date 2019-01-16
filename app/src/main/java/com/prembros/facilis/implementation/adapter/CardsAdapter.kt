@@ -58,7 +58,6 @@ class CardsAdapter(private val activity: BaseCardActivity) : RecyclerView.Adapte
                 view.context.getString(R.string.plain_card) -> activity.pushFragment(PlainCardFragment())
                 view.context.getString(R.string.blur_popup_zoom) -> activity.pushPopup(SampleBlurPopup.newInstance(R.anim.zoom_in, R.anim.zoom_out))
                 view.context.getString(R.string.blur_popup_float_up) -> activity.pushPopup(SampleBlurPopup.newInstance(R.anim.float_up, R.anim.sink_down))
-                view.context.getString(R.string.blur_popup_long_press) -> activity.toast("long press for popup")
             }
         }
 
